@@ -13,7 +13,7 @@ const Chart = ({ x, y, scales }) => {
   const data = x.map((v, i) => {
     return {
       x: v,
-      y: y[i]
+      y: y[i],
     }
   })
 

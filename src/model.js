@@ -1,5 +1,4 @@
 const Model = (opts) => {
-
   opts = opts ? opts : {}
 
   const time = Time(opts.time)
@@ -8,7 +7,7 @@ const Model = (opts) => {
   const economics = Economics(opts.economics)
   const physics = Physics(opts.physics)
 
-  const ppmToCO2e = (ppm) => ppm * (2.13 * (44. /12.))
+  const ppmToCO2e = (ppm) => ppm * (2.13 * (44 / 12))
 
   const emissions = (opts) => {
     opts = opts ? opts : {}
@@ -39,7 +38,7 @@ const Model = (opts) => {
   }
 
   const concentration = () => {
-    const cumsum = (sum => value => sum += value)
+    const cumsum = (sum) => (value) => (sum += value)
     const { c0 } = physics
     return effectiveEmissions()
       .map((e) => e * time.dt)
@@ -57,28 +56,25 @@ const Model = (opts) => {
 
   const ecs = () => {
     const { a, B } = physics
-    return a * Math.log(2) / B
+    return (a * Math.log(2)) / B
   }
 
   const temperature = () => {
-    const cumsum = (sum => value => sum += value)
+    const cumsum = (sum) => (value) => (sum += value)
     const { td, Cd, x, B, A, T0 } = physics
     const { t, dt } = time
     const f = forcing()
     const slow = time.i
-      .map((i) => (Math.exp( (t[i] - (t[0] - dt)) / td) / td) * f[i] * dt)
+      .map((i) => (Math.exp((t[i] - (t[0] - dt)) / td) / td) * f[i] * dt)
       .map(cumsum(0))
       .map((v, i) => {
-        return Math.sqrt(1 - A) * (
-          v *
-          (x / B) / (x + B) * 
-          Math.exp( -(t[i] - (t[0] - dt)) / td)
+        return (
+          Math.sqrt(1 - A) *
+          (((v * (x / B)) / (x + B)) * Math.exp(-(t[i] - (t[0] - dt)) / td))
         )
       })
-    const fast = time.i
-      .map((i) => Math.sqrt(1 - A) * f[i]/(x + B))
-    const temp = time.i
-      .map((i) => Math.sqrt(1 - A) * (T0 + slow[i] + fast[i]))
+    const fast = time.i.map((i) => (Math.sqrt(1 - A) * f[i]) / (x + B))
+    const temp = time.i.map((i) => Math.sqrt(1 - A) * (T0 + slow[i] + fast[i]))
     return temp
   }
 
@@ -86,14 +82,14 @@ const Model = (opts) => {
     return time.t
   }
 
-  return { 
+  return {
     t,
     emissions,
     effectiveEmissions,
     concentration,
     forcing,
     temperature,
-    ecs
+    ecs,
   }
 }
 
@@ -103,18 +99,17 @@ const Time = (opts) => {
   const tmin = opts.tmin ? opts.tmin : 2020
   const tmax = opts.tmax ? opts.tmax : 2200
 
-  const n = (tmax - tmin)/dt + 1
-  const t = Array.from(Array(n), (_, i) => (tmin + i * dt))
+  const n = (tmax - tmin) / dt + 1
+  const t = Array.from(Array(n), (_, i) => tmin + i * dt)
   const i = Array.from(Array(n), (_, i) => i)
 
   return {
     t,
     dt,
     n,
-    i
+    i,
   }
 }
-
 
 const Baseline = (opts, time) => {
   opts = opts ? opts : {}
@@ -129,12 +124,12 @@ const Baseline = (opts, time) => {
       const tmin = t[0]
       const Δt0 = t1 - tmin
       const Δt1 = t2 - t1
-      q = t.map(t => {
+      q = t.map((t) => {
         if (t < t1) {
-          return q0 * (1. + (q0mult-1) *(t - tmin)/Δt0)
+          return q0 * (1 + ((q0mult - 1) * (t - tmin)) / Δt0)
         }
         if (t >= t1 && t < t2) {
-          return q0mult * q0 * (t2 - t)/Δt1
+          return (q0mult * q0 * (t2 - t)) / Δt1
         }
         if (t >= t2) {
           return 0
@@ -144,21 +139,19 @@ const Baseline = (opts, time) => {
   }
 
   return {
-    q
+    q,
   }
-
 }
 
 const Economics = (opts) => {
   opts = opts ? opts : {}
-
 }
 
 const Physics = (opts) => {
   opts = opts ? opts : {}
 
   const { r, c0, a, Finf, F0, B, Cd, x, T0 } = opts
-  const td = (Cd / B) * (B + x) / x
+  const td = ((Cd / B) * (B + x)) / x
   const A = 0
 
   return {
@@ -172,7 +165,7 @@ const Physics = (opts) => {
     x,
     T0,
     td,
-    A
+    A,
   }
 }
 
@@ -188,7 +181,7 @@ const Controls = (opts, time) => {
     remove,
     mitigate,
     geoeng,
-    adapt
+    adapt,
   }
 }
 
