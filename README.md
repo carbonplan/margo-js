@@ -2,15 +2,61 @@
 
 margo climate model in pure javascript
 
-## build
+## how to use
 
-to build the package for distribution with `rollup` run
+instantiate a model using
+
+```
+import { Model } from 'margo-js'
+
+const m = Model()
+```
+
+you can specify lots of parameters, for example here we change the maximum time and a climate feedback parameter
+
+```
+var opts = {
+  time: {
+    tmax: 2300,
+  },
+  physics: {
+    B: 1.2,
+  },
+}
+
+const m = margo.Model(opts)
+```
+
+once constructed you can generate diagnostic time series from the model
+
+```
+m.emissions()
+m.concentration()
+m.forcing()
+m.temperature()
+```
+
+and you can optimize controls (NOT YET IMPLEMENTED)
+
+```
+import { optimize } from 'margo-js'
+
+const mOpt = optimize(m)
+```
+
+## development
+
+for development, first clone the repository and install the dependencies using
+
+```
+npm i
+```
+
+to build the package for distribution run
 
 ```
 npm run build
 ```
-
-## test
 
 to run the tests use
 
@@ -20,9 +66,11 @@ npm run test
 
 ## demo
 
-to checkout the demo web app, first follow the instructions above to build the package, then navigate to the `demo` folder and run
+to checkout a demo web app, first follow the instructions above to build the package, then navigate to the `demo` folder and run
 
 ```
 npm i
 npm run dev
 ```
+
+you can also see the demo live [here]()
