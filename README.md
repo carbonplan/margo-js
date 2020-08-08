@@ -4,9 +4,9 @@ margo climate model in pure javascript
 
 ## how to use
 
-instantiate a model using
+instantiate a model with default parameters using
 
-```
+```js
 import { Model } from 'margo-js'
 
 const m = Model()
@@ -14,7 +14,7 @@ const m = Model()
 
 you can specify lots of parameters, for example here we change the maximum time and a climate feedback parameter
 
-```
+```js
 var opts = {
   time: {
     tmax: 2300,
@@ -24,12 +24,12 @@ var opts = {
   },
 }
 
-const m = margo.Model(opts)
+const m = Model(opts)
 ```
 
 once constructed you can generate diagnostic time series from the model
 
-```
+```js
 m.emissions()
 m.concentration()
 m.forcing()
@@ -38,7 +38,7 @@ m.temperature()
 
 and you can optimize controls (NOT YET IMPLEMENTED)
 
-```
+```js
 import { optimize } from 'margo-js'
 
 const mOpt = optimize(m)
