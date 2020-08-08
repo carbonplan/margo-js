@@ -1,0 +1,39 @@
+{
+  "name": "margo-js",
+  "version": "1.0.0",
+  "description": "pure javascript implementation of the margo climate model",
+  "main": "dst/margo-js.cjs.js",
+  "module": "dst/margo-js.esm.js",
+  "browser": "dst/margo-js.umd.js",
+  "scripts": {
+    "build": "rollup -c",
+    "dev": "rollup -c -w",
+    "test": "node test/test.js",
+    "pretest": "npm run build"
+  },
+  "files": [
+    "dst"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/carbonplan/margo-js.git"
+  },
+  "keywords": [
+    "climate",
+    "simulation",
+    "model",
+    "margo",
+    "physics"
+  ],
+  "author": "carbonplan",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/carbonplan/margo-js/issues"
+  },
+  "homepage": "https://github.com/carbonplan/margo-js#readme",
+  "devDependencies": {
+    "@rollup/plugin-commonjs": "^11.0.1",
+    "@rollup/plugin-node-resolve": "^7.0.0",
+    "rollup": "^1.29.0"
+  }
+}
