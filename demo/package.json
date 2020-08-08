@@ -1,0 +1,24 @@
+{
+  "name": "margo-js-demo",
+  "version": "1.0.0",
+  "description": "demo of the margo-js climate model",
+  "main": "index.js",
+  "scripts": {
+    "dev": "next",
+    "build": "next build",
+    "start": "next start"
+  },
+  "author": "carbonplan",
+  "license": "MIT",
+  "dependencies": {
+    "@carbonplan/components": "^1.0.0",
+    "@carbonplan/theme": "^1.1.0",
+    "next": "^9.5.1",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "react-vega": "^7.4.1",
+    "theme-ui": "^0.3.1",
+    "vega": "^5.13.0",
+    "vega-lite": "^4.14.1"
+  }
+}

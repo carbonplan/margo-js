@@ -33,9 +33,9 @@ const Model = (opts) => {
 
   const forcing = () => {
     const c = concentration()
-    const { a, F0, Finf, c0 } = physics
+    const { a, Finf, c0 } = physics
     return time.i.map((i) => {
-      return F0 + a * Math.log(c[i] / c0) - controls.geoeng[i] * Finf
+      return a * Math.log(c[i] / c0) - controls.geoeng[i] * Finf
     })
   }
 
@@ -46,7 +46,7 @@ const Model = (opts) => {
 
   const temperature = () => {
     const cumsum = (sum => value => sum += value)
-    const { td, F0, Cd, x, B, A, T0 } = physics
+    const { td, Cd, x, B, A, T0 } = physics
     const { t, dt } = time
     const f = forcing()
     const slow = time.i
