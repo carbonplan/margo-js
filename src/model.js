@@ -8,18 +8,34 @@ const Model = (opts) => {
   const economics = Economics(opts.economics)
   const physics = Physics(opts.physics)
 
-  const emissions = () => {
-    return time.i.map((i) => {
+  const ppmToCO2e = (ppm) => ppm * (2.13 * (44. /12.))
+
+  const emissions = (opts) => {
+    opts = opts ? opts : {}
+    const units = opts.units ? opts.units : 'ppm'
+    const e = time.i.map((i) => {
       return baseline.q[i] * (1 - controls.mitigate[i])
     })
+    if (units === 'CO2e') {
+      return e.map(ppmToCO2e)
+    } else if (units === 'ppm') {
+      return e
+    }
   }
 
-  const effectiveEmissions = () => {
+  const effectiveEmissions = (opts) => {
+    opts = opts ? opts : {}
+    const units = opts.units ? opts.units : 'ppm'
     const { r } = physics
     const { q } = baseline
-    return time.i.map((i) => {
+    const e = time.i.map((i) => {
       return r * (q[i] * (1 - controls.mitigate[i]) - q[0] * controls.remove[i])
     })
+    if (units === 'CO2e') {
+      return e.map(ppmToCO2e)
+    } else if (units === 'ppm') {
+      return e
+    }
   }
 
   const concentration = () => {
