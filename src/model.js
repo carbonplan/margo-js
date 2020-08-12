@@ -92,11 +92,11 @@ const Model = (opts) => {
     temperature,
     ecs,
     set physics(opts) {
-      init.physics = {...init.physics, ...opts}
+      init.physics = { ...init.physics, ...opts }
       physics = Physics(init.physics)
     },
     set economics(opts) {
-      init.economics = {...init.economics, ...opts}
+      init.economics = { ...init.economics, ...opts }
       economics = Economics(init.economics)
     },
     set baseline(opts) {

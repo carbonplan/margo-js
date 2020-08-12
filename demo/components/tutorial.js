@@ -54,10 +54,11 @@ function Tutorial() {
   return (
     <Box>
       <Text sx={{ fontSize: [3] }}>
-        We first show baseline emissions and concentrations
-        as a function of parameters that control their values,
-        such as q0 (<Variable v={q0.toFixed(2)}/>) and q0mult (<Variable v={q0mult.toFixed(2)}/>)
-        and t1 (<Variable v={t1.toFixed(0)}/>)
+        We first show baseline emissions and concentrations as a function of
+        parameters that control their values, such as q0 (
+        <Variable v={q0.toFixed(2)} />) and q0mult (
+        <Variable v={q0mult.toFixed(2)} />) and t1 (
+        <Variable v={t1.toFixed(0)} />)
       </Text>
       <Grid columns={['500px 1fr']} sx={{ mt: [4] }}>
         <Box>
@@ -70,7 +71,7 @@ function Tutorial() {
               y: [-1, 190],
               padding: 17,
               title: 'EMISSIONS (Gt CO2e)',
-              color: 'blue'
+              color: 'blue',
             }}
           />
           <Chart
@@ -80,7 +81,7 @@ function Tutorial() {
               x: [2020, 2200],
               y: [500, 1400],
               title: 'CONCENTRATION (ppm)',
-              color: 'blue'
+              color: 'blue',
             }}
           />
         </Box>
@@ -114,7 +115,7 @@ function Tutorial() {
               max='5.0'
               step='0.1'
             ></Slider>
-             <Text
+            <Text
               sx={{
                 fontFamily: 'monospace',
                 letterSpacing: 'monospace',
@@ -132,7 +133,7 @@ function Tutorial() {
               max='7'
               step='0.1'
             ></Slider>
-             <Text
+            <Text
               sx={{
                 fontFamily: 'monospace',
                 letterSpacing: 'monospace',
@@ -153,13 +154,14 @@ function Tutorial() {
           </Box>
         </Box>
       </Grid>
-      <Divider sx={{ mb: [4] }}/>
+      <Divider sx={{ mb: [4] }} />
       <Text sx={{ fontSize: [3] }}>
-        Next we can look at radiative forcing and temperature,
-        which in turn depend on the setting of several physical parameters
-        such as B (<Variable v={B.toFixed(2)}/>), which in turn determines
-        the equilibrium climate sensitivity (<Variable v={m.ecs().toFixed(2)}/>).
-        (Note that this entire document is interactive, so changing the above
+        Next we can look at radiative forcing and temperature, which in turn
+        depend on the setting of several physical parameters such as B (
+        <Variable v={B.toFixed(2)} />
+        ), which in turn determines the equilibrium climate sensitivity (
+        <Variable v={m.ecs().toFixed(2)} />
+        ). (Note that this entire document is interactive, so changing the above
         parameters will also continue to update these charts!)
       </Text>
       <Grid columns={['500px 1fr']} sx={{ mt: [4] }}>
@@ -172,7 +174,7 @@ function Tutorial() {
               x: [2020, 2200],
               y: [0, 10],
               title: 'RADIATIVE FORCING (W/m^2)',
-              color: 'blue'
+              color: 'blue',
             }}
           />
           <Chart
@@ -183,7 +185,7 @@ function Tutorial() {
               y: [0, 5],
               padding: 7,
               title: 'TEMPERATURE (ºC)',
-              color: 'blue'
+              color: 'blue',
             }}
           />
         </Box>
@@ -220,10 +222,8 @@ function Tutorial() {
           </Box>
         </Box>
       </Grid>
-      <Divider/>
-      <Text sx={{ fontSize: [3] }}>
-        We can also specify controls...
-      </Text>
+      <Divider />
+      <Text sx={{ fontSize: [3] }}>We can also specify controls...</Text>
     </Box>
   )
 }

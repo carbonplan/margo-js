@@ -51,7 +51,7 @@ const Chart = ({ x, y, scales }) => {
       mark: {
         type: 'line',
         clip: true,
-        color: theme.colors[scales.color]
+        color: theme.colors[scales.color],
       },
       encoding: {
         x: {

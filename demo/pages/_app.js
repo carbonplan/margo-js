@@ -10,7 +10,7 @@ const theme = {
   ...base,
   styles: {
     ...base.styles,
-    pre: {
+    code: {
       px: [3],
       py: [3],
       fontFamily: 'monospace',
@@ -33,7 +33,7 @@ const theme = {
         color: 'secondary',
       },
     },
-  }
+  },
 }
 
 const components = {
