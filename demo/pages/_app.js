@@ -33,6 +33,14 @@ const theme = {
         color: 'secondary',
       },
     },
+    inlineCode: {
+      px: [1],
+      mx: [1],
+      pt: [0],
+      pb: [1],
+      fontFamily: 'monospace',
+      backgroundColor: alpha('muted', 0.2),
+    }
   },
 }
 

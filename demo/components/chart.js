@@ -87,7 +87,7 @@ const Chart = ({ x, y, scales }) => {
     }
     setSpec(vegaLite.compile(spec, { config: config }).spec)
     setLoaded(true)
-  }, [])
+  }, [context])
 
   const width = 350
   const height = 200

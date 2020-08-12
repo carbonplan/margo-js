@@ -6,6 +6,11 @@ const Variable = ({ v }) => {
       sx={{
         fontFamily: 'monospace',
         display: 'inline-block',
+        borderColor: 'text',
+        borderWidth: '0px',
+        borderBottomWidth: '2px',
+        borderStyle: 'dotted',
+        ml: [1]
       }}
     >
       {v}
