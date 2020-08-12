@@ -1,5 +1,7 @@
 # margo-js
 
+![CI](https://github.com/carbonplan/margo-js/workflows/CI/badge.svg)
+
 margo climate model in pure javascript
 
 ## how to use
