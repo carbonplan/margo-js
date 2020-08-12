@@ -11,7 +11,7 @@ var opts = {
   time: {
     tmin: 2020,
     tmax: 2200,
-    dt: 5
+    dt: 5,
   },
   baseline: {
     form: 'ramp',
@@ -23,18 +23,17 @@ var opts = {
   physics: {
     r: 0.5,
     c0: 460,
-    a: (6.9/2)/Math.log(2),
+    a: 6.9 / 2 / Math.log(2),
     Finf: 8.5,
     F0: 3,
     B: 1.13,
     Cd: 106,
     x: 0.73,
     T0: 1.1,
-    A: 0
+    A: 0,
   },
-  economics: {
-  },
-  controls: null
+  economics: {},
+  controls: null,
 }
 
 const m = margo.Model(opts)
