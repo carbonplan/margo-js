@@ -83,6 +83,105 @@ const Model = (opts) => {
     return time.t
   }
 
+  const f = (alpha, p) => {
+    return alpha.map((a) => Math.pow(a, p))
+  }
+
+  const futureMask = () => {
+    // maybe this should go on the Time object?
+    return time.t.map((t) => t < time.presentYear)
+  }
+
+  const E = () => {
+    return time.t.map(
+      (t) => economics.E0 * Math.pow(1 + economics.gamma, t - time.t[0])
+    )
+  }
+
+  const discount = () => {
+    const future = futureMask()
+    return time.i.map(
+      (i) => (
+        future[i] * Math.pow(1 * economics.rho),
+        -1 * (time.t[i] - time.presentYear)
+      )
+    )
+  }
+
+  const _damage = (beta, E, T, A, discount) => {
+    return time.i.map(
+      (i) => (1 - A) * beta * e[i] * Math.pow(t, 2) * discount[i]
+    )
+  }
+
+  const damage = () => {
+    const a = 0
+    const e = E()
+    const t = temperature()
+    const d = discount()
+
+    return _damage(economics.beta, e, t, a, d)
+  }
+
+  const damageBaseline = () => {
+    const a = 0
+    const e = E()
+    // TODO: Need a way to set MRGA to 0. Something like this...
+    const t = temperature((M = false), (R = false), (G = false), (A = false))
+    const d = discount()
+
+    return _damage(economics.beta, e, t, a, d)
+  }
+
+  const cost = () => {
+    const p = 2 // what parameter is this
+    const e = E() // E is called hereM and in damages
+
+    const q = baseline()
+    const d = discount()
+
+    return time.i.map(
+      (i) =>
+        (ppmToCO2e(q[i]) *
+          economics.mitigateCost *
+          Math.pow(controls.mitigate[i], p) +
+          e[i] * economics.geoengCost * Math.pow(controls.geoeng[i], p) +
+          economics.removalCost * Math.pow(controls.remove[i], p) +
+          economics.adaptCost * Math.pow(controls.adapt[i])) *
+        d[i]
+    )
+  }
+
+  const benefit = () => {
+    // TODO: need a way to control discounting and MRGA options
+    const db = damageBaseline()
+    const d = damage()
+    return time.i.map((i) => db[i] - d[i])
+  }
+
+  const netBenefit = () => {
+    // TODO: need a way to control discounting and MRGA options
+    const c = cost()
+    const b = benefit()
+    return time.i.map((i) => b[i] - c[i])
+  }
+
+  const netPresentCost = () => {
+    return (
+      cost().reduce(function (a, b) {
+        return a + b
+      }, 0) * time.dt
+    )
+  }
+
+  const netPresentBenefit = () => {
+    return (
+      netBenefit().reduce(function (a, b) {
+        return a + b
+      }, 0) * time.dt
+    )
+  }
+
   return {
     t,
     emissions,
@@ -120,6 +219,7 @@ const Time = (opts) => {
   const dt = opts.dt ? opts.dt : 5
   const tmin = opts.tmin ? opts.tmin : 2020
   const tmax = opts.tmax ? opts.tmax : 2200
+  const presentYear = opts.presentYear ? opts.presentYear : 2020
 
   const n = (tmax - tmin) / dt + 1
   const t = Array.from(Array(n), (_, i) => tmin + i * dt)
@@ -132,6 +232,7 @@ const Time = (opts) => {
     i,
     tmin,
     tmax,
+    presentYear,
   }
 }
 
@@ -192,6 +293,30 @@ const Baseline = (opts, time) => {
 
 const Economics = (opts) => {
   opts = opts ? opts : {}
+
+  const {
+    E0,
+    gamma,
+    beta,
+    rho,
+    Finf,
+    mitigateCost,
+    removalCost,
+    geoengCost,
+    adaptCost,
+  } = opts
+
+  return {
+    E0,
+    gamma,
+    beta,
+    rho,
+    Finf,
+    mitigateCost,
+    removalCost,
+    geoengCost,
+    adaptCost,
+  }
 }
 
 const Physics = (opts) => {
@@ -203,7 +328,7 @@ const Physics = (opts) => {
     r,
     c0,
     a,
-    Finf,
+    Finf, // TODO: move Finf to economics
     F0,
     B,
     Cd,
