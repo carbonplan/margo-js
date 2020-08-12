@@ -14,7 +14,7 @@ import { Model } from 'margo-js'
 const m = Model()
 ```
 
-you can specify lots of parameters, for example here we change the maximum time and a climate feedback parameter
+you can specify lots of parameters, for example here we set a maximum time and a climate feedback parameter
 
 ```js
 var opts = {
@@ -36,6 +36,13 @@ m.emissions()
 m.concentration()
 m.forcing()
 m.temperature()
+```
+
+you can update parameters by setting on or more values on the corresponding parameter group
+
+```js
+m.physics = { B: 1.2 }
+m.time = { tmax : 2300 }
 ```
 
 and you can optimize controls (NOT YET IMPLEMENTED)

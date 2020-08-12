@@ -44,7 +44,7 @@ const opts = {
     ...
   },
   controls: {
-
+    ...
   },
 }
 ```
@@ -53,26 +53,24 @@ Any parameters not specified will be provided with defaults. We can access diagn
 
 ```js
 m.emissions({units: 'CO2e'})
+>> [ 7.5, ... ]
 m.concentration()
+>> [ 478.75, ... ]
 ```
 
-And we can update model parameters by setting them directly.
+We can update model parameters by setting them directly:
 
 ```js
-m.physics.B = 1.3
+m.physics = { B: 1.3 }
 ```
 
-Note that when setting parameters related to `time`, `baseline`, or `controls`, all parameters must be specified at once, and the model will automatically trigger recomputations to validate subsequent calculations. For example, setting `time` via
+Note that when setting parameters related to `time`, `baseline`, or `controls`, the model will automatically trigger recomputations to validate subsequent calculations. For example, updating parameters of `time` via
 
 ```js
-m.time = {
-  tmin: 2020,
-  tmax: 2300,
-  dt: 5
-}
+m.time = { tmax: 2300 }
 ```
 
-will recompute the baseline and controls using previously provided parameters, and raise an error if any inconsistencies are detected.
+will recompute the baseline and controls using a combination of new and previously provided parameters, and raise an error if any inconsistencies are detected.
 
 Here we walk through some example parameter configurations and charts.
 

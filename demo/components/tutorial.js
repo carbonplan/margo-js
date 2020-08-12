@@ -41,7 +41,7 @@ function Tutorial() {
   const [q0mult, setq0mult] = useState(3)
   const [t1, sett1] = useState(2100)
 
-  m.physics.B = B
+  m.physics = { B: B }
 
   m.baseline = {
     form: 'ramp',
@@ -98,8 +98,8 @@ function Tutorial() {
             </Text>
             <Text
               sx={{
-                fontFamily: 'faux',
-                letterSpacing: 'faux',
+                fontFamily: 'monospace',
+                letterSpacing: 'monospace',
                 fontSize: [2],
                 mt: [3],
               }}
@@ -114,7 +114,16 @@ function Tutorial() {
               max='5.0'
               step='0.1'
             ></Slider>
-            <Text sx={{ fontSize: [3] }}>q0</Text>
+             <Text
+              sx={{
+                fontFamily: 'monospace',
+                letterSpacing: 'monospace',
+                fontSize: [2],
+                mt: [3],
+              }}
+            >
+              q0
+            </Text>
             <Slider
               sx={{ width: '200px' }}
               value={q0}
@@ -123,7 +132,16 @@ function Tutorial() {
               max='7'
               step='0.1'
             ></Slider>
-            <Text sx={{ fontSize: [3] }}>t1</Text>
+             <Text
+              sx={{
+                fontFamily: 'monospace',
+                letterSpacing: 'monospace',
+                fontSize: [2],
+                mt: [3],
+              }}
+            >
+              t1
+            </Text>
             <Slider
               sx={{ width: '200px' }}
               value={t1}
@@ -153,7 +171,6 @@ function Tutorial() {
             scales={{
               x: [2020, 2200],
               y: [0, 10],
-              padding: 17,
               title: 'RADIATIVE FORCING (W/m^2)',
               color: 'blue'
             }}
@@ -164,6 +181,7 @@ function Tutorial() {
             scales={{
               x: [2020, 2200],
               y: [0, 5],
+              padding: 7,
               title: 'TEMPERATURE (ºC)',
               color: 'blue'
             }}
@@ -183,8 +201,8 @@ function Tutorial() {
             </Text>
             <Text
               sx={{
-                fontFamily: 'faux',
-                letterSpacing: 'faux',
+                fontFamily: 'monospace',
+                letterSpacing: 'monospace',
                 fontSize: [2],
                 mt: [3],
               }}

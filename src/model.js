@@ -4,8 +4,8 @@ const Model = (opts) => {
   var time = Time(init.time)
   var baseline = Baseline(init.baseline, time)
   var controls = Controls(init.controls, time)
-  const economics = Economics(init.economics)
-  const physics = Physics(init.physics)
+  var economics = Economics(init.economics)
+  var physics = Physics(init.physics)
 
   const ppmToCO2e = (ppm) => ppm * (2.13 * (44 / 12))
 
@@ -91,8 +91,14 @@ const Model = (opts) => {
     forcing,
     temperature,
     ecs,
-    physics,
-    economics,
+    set physics(opts) {
+      init.physics = {...init.physics, ...opts}
+      physics = Physics(init.physics)
+    },
+    set economics(opts) {
+      init.economics = {...init.economics, ...opts}
+      economics = Economics(init.economics)
+    },
     set baseline(opts) {
       init.baseline = opts
       baseline = Baseline(opts, time)

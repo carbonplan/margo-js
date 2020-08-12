@@ -1,3 +1,10 @@
+// this is a super minimal test suite
+// it creates a model with default parameters
+// and checks the first and sixth value of each
+// diagnostic against precomputed values
+// from an independent implementation
+
+const test = require('tape')
 const margo = require('..')
 
 var opts = {
@@ -7,11 +14,11 @@ var opts = {
     dt: 5
   },
   baseline: {
-    form: 'capped',
-    f0: 7.5,
-    r: 0.03,
-    m: 0.02,
-    td: 2050,
+    form: 'ramp',
+    q0: 7.5,
+    q0mult: 3,
+    t1: 2100,
+    t2: 2150,
   },
   physics: {
     r: 0.5,
@@ -22,7 +29,8 @@ var opts = {
     B: 1.13,
     Cd: 106,
     x: 0.73,
-    T0: 1.056,
+    T0: 1.1,
+    A: 0
   },
   economics: {
   },
@@ -31,17 +39,37 @@ var opts = {
 
 const m = margo.Model(opts)
 
-console.log(m.emissions())
-console.log(m.concentration())
-console.log(m.forcing())
-console.log(m.temperature())
-console.log(m.ecs())
+const emissions = m.emissions()
+const concentration = m.concentration()
+const forcing = m.forcing()
+const temperature = m.temperature()
+const ecs = m.ecs()
 
+test('emissions', (t) => {
+  t.equal(emissions[0], 7.5)
+  t.equal(emissions[5], 12.1875)
+  t.end()
+})
 
-// baseline: {
-//   form: 'ramp',
-//   q0: 7.5,
-//   q0mult: 3,
-//   t1: 2100,
-//   t2: 2150
-// },
+test('concentration', (t) => {
+  t.equal(concentration[0], 478.75)
+  t.equal(concentration[5], 607.65625)
+  t.end()
+})
+
+test('forcing', (t) => {
+  t.equal(forcing[0], 0.1988532592444071)
+  t.equal(forcing[5], 1.3855943936513244)
+  t.end()
+})
+
+test('temperature', (t) => {
+  t.equal(temperature[0], 1.2083551842122768)
+  t.equal(temperature[5], 1.8776281942807453)
+  t.end()
+})
+
+test('ecs', (t) => {
+  t.equal(ecs, 3.053097345132744)
+  t.end()
+})
