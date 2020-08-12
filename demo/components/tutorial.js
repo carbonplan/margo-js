@@ -55,9 +55,12 @@ function Tutorial() {
     <Box>
       <Text sx={{ fontSize: [3] }}>
         We first show baseline emissions and concentrations as a function of
-        parameters that control their values, such as <Styled.inlineCode>q0</Styled.inlineCode>=
-        <Variable v={q0.toFixed(2)} /> and <Styled.inlineCode>q0mult</Styled.inlineCode>=
-        <Variable v={q0mult.toFixed(2)} /> and <Styled.inlineCode>t1</Styled.inlineCode>=
+        parameters that control their values, such as{' '}
+        <Styled.inlineCode>q0</Styled.inlineCode>=
+        <Variable v={q0.toFixed(2)} /> and{' '}
+        <Styled.inlineCode>q0mult</Styled.inlineCode>=
+        <Variable v={q0mult.toFixed(2)} /> and{' '}
+        <Styled.inlineCode>t1</Styled.inlineCode>=
         <Variable v={t1.toFixed(0)} />
       </Text>
       <Grid columns={['500px 1fr']} sx={{ mt: [4] }}>
@@ -157,12 +160,13 @@ function Tutorial() {
       <Divider sx={{ mb: [4] }} />
       <Text sx={{ fontSize: [3] }}>
         Next we can look at radiative forcing and temperature, which in turn
-        depend on the setting of several physical parameters such as <Styled.inlineCode>B</Styled.inlineCode>=
-        <Variable v={B.toFixed(2)} />
-        , which in turn determines the equilibrium climate sensitivity <Styled.inlineCode>ECS</Styled.inlineCode>= 
-        <Variable v={m.ecs().toFixed(2)} />. 
-        (Note that this entire document is interactive, so changing the above
-        parameters will also continue to update these charts!)
+        depend on the setting of several physical parameters such as{' '}
+        <Styled.inlineCode>B</Styled.inlineCode>=
+        <Variable v={B.toFixed(2)} />, which in turn determines the equilibrium
+        climate sensitivity <Styled.inlineCode>ECS</Styled.inlineCode>=
+        <Variable v={m.ecs().toFixed(2)} />. (Note that this entire document is
+        interactive, so changing the above parameters will also continue to
+        update these charts!)
       </Text>
       <Grid columns={['500px 1fr']} sx={{ mt: [4] }}>
         <Box>

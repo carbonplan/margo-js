@@ -40,7 +40,7 @@ const theme = {
       pb: [1],
       fontFamily: 'monospace',
       backgroundColor: alpha('muted', 0.2),
-    }
+    },
   },
 }
 
