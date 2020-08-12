@@ -1,11 +1,11 @@
 const Model = (opts) => {
-  opts = opts ? opts : {}
+  const init = opts ? opts : {}
 
-  const time = Time(opts.time)
-  const baseline = Baseline(opts.baseline, time)
-  const controls = Controls(opts.controls, time)
-  const economics = Economics(opts.economics)
-  const physics = Physics(opts.physics)
+  var time = Time(init.time)
+  var baseline = Baseline(init.baseline, time)
+  var controls = Controls(init.controls, time)
+  const economics = Economics(init.economics)
+  const physics = Physics(init.physics)
 
   const ppmToCO2e = (ppm) => ppm * (2.13 * (44 / 12))
 
@@ -61,7 +61,8 @@ const Model = (opts) => {
 
   const temperature = () => {
     const cumsum = (sum) => (value) => (sum += value)
-    const { td, Cd, x, B, A, T0 } = physics
+    const { Cd, x, B, T0, A } = physics
+    const td = ((Cd / B) * (B + x)) / x
     const { t, dt } = time
     const f = forcing()
     const slow = time.i
@@ -90,6 +91,21 @@ const Model = (opts) => {
     forcing,
     temperature,
     ecs,
+    physics,
+    economics,
+    set baseline(opts) {
+      init.baseline = opts
+      baseline = Baseline(opts, time)
+    },
+    set controls(opts) {
+      init.controls = opts
+      controls = Controls(opts, time)
+    },
+    set time(opts) {
+      time = Time(opts)
+      baseline = Baseline(init.baseline, time)
+      controls = Controls(init.controls, time)
+    },
   }
 }
 
@@ -108,33 +124,58 @@ const Time = (opts) => {
     dt,
     n,
     i,
+    tmin,
+    tmax,
   }
 }
 
 const Baseline = (opts, time) => {
   opts = opts ? opts : {}
+  const { tmin } = time
 
-  const { t } = time
+  const ramp = () => {
+    const { q0, q0mult, t1, t2 } = opts
+    const Δt0 = t1 - tmin
+    const Δt1 = t2 - t1
+    const q = time.t.map((t) => {
+      if (t < t1) {
+        return q0 * (1 + ((q0mult - 1) * (t - tmin)) / Δt0)
+      }
+      if (t >= t1 && t < t2) {
+        return (q0mult * q0 * (t2 - t)) / Δt1
+      }
+      if (t >= t2) {
+        return 0
+      }
+    })
+    return q
+  }
+
+  const capped = () => {
+    const { f0, r, m, td } = opts
+    const q = time.t.map((t) => {
+      if (t <= td) {
+        return f0 * Math.exp(r * (t - tmin))
+      }
+      if (t > td) {
+        return (
+          f0 *
+          Math.exp(r * (td - tmin)) *
+          (1 + (r + m) * (t - (td - tmin) - tmin)) *
+          Math.exp(-m * (t - (td - tmin) - tmin))
+        )
+      }
+    })
+    return q
+  }
 
   var q
-
   switch (opts.form) {
     case 'ramp':
-      const { q0, q0mult, t1, t2 } = opts
-      const tmin = t[0]
-      const Δt0 = t1 - tmin
-      const Δt1 = t2 - t1
-      q = t.map((t) => {
-        if (t < t1) {
-          return q0 * (1 + ((q0mult - 1) * (t - tmin)) / Δt0)
-        }
-        if (t >= t1 && t < t2) {
-          return (q0mult * q0 * (t2 - t)) / Δt1
-        }
-        if (t >= t2) {
-          return 0
-        }
-      })
+      q = ramp()
+      break
+    case 'capped':
+      q = capped()
       break
   }
 
@@ -150,9 +191,7 @@ const Economics = (opts) => {
 const Physics = (opts) => {
   opts = opts ? opts : {}
 
-  const { r, c0, a, Finf, F0, B, Cd, x, T0 } = opts
-  const td = ((Cd / B) * (B + x)) / x
-  const A = 0
+  const { r, c0, a, Finf, F0, B, Cd, x, T0, A } = opts
 
   return {
     r,
@@ -164,18 +203,18 @@ const Physics = (opts) => {
     Cd,
     x,
     T0,
-    td,
     A,
   }
 }
 
 const Controls = (opts, time) => {
+  opts = opts ? opts : {}
   const { t, n } = time
 
-  const remove = Array(n).fill(0)
-  const mitigate = Array(n).fill(0)
-  const geoeng = Array(n).fill(0)
-  const adapt = Array(n).fill(0)
+  const remove = opts.remove ? opts.remove : Array(n).fill(0)
+  const mitigate = opts.mitigate ? opts.mitigate : Array(n).fill(0)
+  const geoeng = opts.geoeng ? opts.geoeng : Array(n).fill(0)
+  const adapt = opts.adapt ? opts.adapt : Array(n).fill(0)
 
   return {
     remove,

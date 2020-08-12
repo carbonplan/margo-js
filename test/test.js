@@ -7,11 +7,11 @@ var opts = {
     dt: 5
   },
   baseline: {
-    form: 'ramp',
-    q0: 7.5,
-    q0mult: 3,
-    t1: 2100,
-    t2: 2150
+    form: 'capped',
+    f0: 7.5,
+    r: 0.03,
+    m: 0.02,
+    td: 2050,
   },
   physics: {
     r: 0.5,
@@ -22,7 +22,7 @@ var opts = {
     B: 1.13,
     Cd: 106,
     x: 0.73,
-    T0: 1.1,
+    T0: 1.056,
   },
   economics: {
   },
@@ -36,3 +36,12 @@ console.log(m.concentration())
 console.log(m.forcing())
 console.log(m.temperature())
 console.log(m.ecs())
+
+
+// baseline: {
+//   form: 'ramp',
+//   q0: 7.5,
+//   q0mult: 3,
+//   t1: 2100,
+//   t2: 2150
+// },

@@ -20,14 +20,19 @@ const Chart = ({ x, y, scales }) => {
   useEffect(() => {
     const config = {
       background: null,
-      padding: { left: 0, right: 0, top: 0, bottom: 0 },
+      padding: {
+        left: scales.padding ? scales.padding : 0,
+        right: 0,
+        top: 0,
+        bottom: 0,
+      },
       axis: {
         grid: false,
-        labelFontSize: theme.fontSizes[1],
+        labelFontSize: theme.fontSizes[2],
         labelFont: theme.fonts.monospace,
         labelColor: theme.colors.text,
         titleFont: theme.fonts.monospace,
-        titleFontSize: theme.fontSizes[1],
+        titleFontSize: theme.fontSizes[2],
         titleColor: theme.colors.text,
         domain: true,
         tickOffset: 0,
@@ -46,6 +51,7 @@ const Chart = ({ x, y, scales }) => {
       mark: {
         type: 'line',
         clip: true,
+        color: theme.colors[scales.color]
       },
       encoding: {
         x: {
@@ -59,6 +65,7 @@ const Chart = ({ x, y, scales }) => {
           axis: {
             title: null,
             offset: 6,
+            format: '.0f',
           },
         },
         y: {
@@ -70,7 +77,7 @@ const Chart = ({ x, y, scales }) => {
             nice: false,
           },
           axis: {
-            title: null,
+            title: scales.title,
             orient: 'left',
             padding: 0,
             offset: 5,
@@ -80,13 +87,13 @@ const Chart = ({ x, y, scales }) => {
     }
     setSpec(vegaLite.compile(spec, { config: config }).spec)
     setLoaded(true)
-  }, [context])
+  }, [])
 
-  const width = 280
-  const height = 150
+  const width = 350
+  const height = 200
 
   return (
-    <>
+    <Box sx={{ py: [3] }}>
       {loaded && (
         <Vega
           width={width}
@@ -98,7 +105,7 @@ const Chart = ({ x, y, scales }) => {
         />
       )}
       {!loaded && <Box sx={{ height: height + 41 }}></Box>}
-    </>
+    </Box>
   )
 }
 
