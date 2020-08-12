@@ -7,11 +7,11 @@ export const meta = {}
 
 This notebook demonstrates a pure Javascript implementation of the MARGO climate model.
 
-The MARGO model, developed by Drake, Rivest, Deutch, and Edelman (2020), proposes a feed forward causal model relating emissions, greenhouse gas concentrations, radiative forcing, temperatures, and climate damages, all of which can be controlled by varying amounts of mitigation, carbon removal, geoengineering, and adaptation. A preprint is available on [EarthRXiv](https://eartharxiv.org/5bgyc) and the source code for a Julia implementation is available on [Github](https://github.com/hdrake/ClimateMARGO.jl). 
+The MARGO model, developed by Drake, Rivest, Deutch, and Edelman (2020), proposes a feed forward causal model relating emissions, greenhouse gas concentrations, radiative forcing, temperatures, and climate damages, all of which can be controlled by varying amounts of mitigation, carbon removal, geoengineering, and adaptation. A preprint is available on [EarthRXiv](https://eartharxiv.org/5bgyc) and the source code for a Julia implementation is available on [Github](https://github.com/hdrake/ClimateMARGO.jl).
 
 Here, we demo a pure Javascript (JS) implementation of the model. We see several use cases for a pure JS implementation, including use in interactive articles and visual storytelling, and the ability to create interactive exploration tools without relying on complex client-server architectures. That said, implementations in Julia or similar languages will likely have performance advantages and be more appealing for research use cases.
 
-We'll walk through a series of interactive plots similar to the [notebook example](https://github.com/hdrake/ClimateMARGO.jl/blob/master/examples/tutorial.ipynb) included with the Julia version. 
+We'll walk through a series of interactive plots similar to the [notebook example](https://github.com/hdrake/ClimateMARGO.jl/blob/master/examples/tutorial.ipynb) included with the Julia version.
 
 To set up the model, we set some parameters and instantiate an model
 
@@ -74,6 +74,6 @@ will recompute the baseline and controls using a combination of new and previous
 
 Here we walk through some example parameter configurations and charts.
 
-<Tutorial/>
+<Tutorial />
 
 export default ({ children }) => <Layout meta={meta}>{children}</Layout>

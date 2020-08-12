@@ -42,7 +42,7 @@ you can update parameters by setting on or more values on the corresponding para
 
 ```js
 m.physics = { B: 1.2 }
-m.time = { tmax : 2300 }
+m.time = { tmax: 2300 }
 ```
 
 and you can optimize controls (NOT YET IMPLEMENTED)

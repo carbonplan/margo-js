@@ -8,19 +8,16 @@ export default [
     output: {
       name: 'margo-js',
       file: pkg.browser,
-      format: 'umd'
+      format: 'umd',
     },
-    plugins: [
-      resolve(),
-      commonjs()
-    ]
+    plugins: [resolve(), commonjs()],
   },
   {
     input: 'src/index.js',
     external: [],
     output: [
       { file: pkg.main, format: 'cjs' },
-      { file: pkg.module, format: 'es' }
-    ]
-  }
-];
+      { file: pkg.module, format: 'es' },
+    ],
+  },
+]
