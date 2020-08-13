@@ -83,14 +83,27 @@ const Model = (opts) => {
     return time.t
   }
 
+  const mitigate = () => {
+    return controls.mitigate
+  }
+
+  const remove = () => {
+    return controls.remove
+  }
+
+  const n = time.n
+
   return {
     t,
+    n,
     emissions,
     effectiveEmissions,
     concentration,
     forcing,
     temperature,
     ecs,
+    mitigate,
+    remove,
     set physics(opts) {
       init.physics = { ...init.physics, ...opts }
       physics = Physics(init.physics)
@@ -100,15 +113,16 @@ const Model = (opts) => {
       economics = Economics(init.economics)
     },
     set baseline(opts) {
-      init.baseline = opts
-      baseline = Baseline(opts, time)
+      init.baseline = { ...init.baseline, ...opts }
+      baseline = Baseline(init.baseline, time)
     },
     set controls(opts) {
-      init.controls = opts
-      controls = Controls(opts, time)
+      init.controls = { ...init.controls, ...opts }
+      controls = Controls(init.controls, time)
     },
     set time(opts) {
-      time = Time(opts)
+      init.time = { ...init.time, ...opts }
+      time = Time(init.time)
       baseline = Baseline(init.baseline, time)
       controls = Controls(init.controls, time)
     },
