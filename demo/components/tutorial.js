@@ -1,7 +1,8 @@
 import { useState } from 'react'
 import { Styled, Box, Text, Grid, Slider, Divider } from 'theme-ui'
-import { Model } from '../..'
+import { Model } from '../lib/margo-js'
 import Chart from './chart'
+import DoubleChart from './double-chart'
 import Variable from './variable'
 
 const opts = {
@@ -40,6 +41,8 @@ function Tutorial() {
   const [q0, setq0] = useState(5)
   const [q0mult, setq0mult] = useState(3)
   const [t1, sett1] = useState(2100)
+  const [mitigate, setMitigate] = useState(0.0)
+  const [remove, setRemove] = useState(0.0)
 
   m.physics = { B: B }
 
@@ -49,6 +52,15 @@ function Tutorial() {
     q0mult: q0mult,
     t1: t1,
     t2: 2150,
+  }
+
+  m.controls = {
+    mitigate: Array(m.n)
+      .fill(0)
+      .map((v, i) => (i / m.n) * mitigate),
+    remove: Array(m.n)
+      .fill(0)
+      .map((v, i) => (i / m.n) * remove),
   }
 
   return (
@@ -63,7 +75,7 @@ function Tutorial() {
         <Styled.inlineCode>t1</Styled.inlineCode>=
         <Variable v={t1.toFixed(0)} />
       </Text>
-      <Grid columns={['500px 1fr']} sx={{ mt: [4] }}>
+      <Grid gap={[5]} columns={['500px 1fr']} sx={{ mt: [4] }}>
         <Box>
           <Divider />
           <Chart
@@ -159,16 +171,16 @@ function Tutorial() {
       </Grid>
       <Divider sx={{ mb: [4] }} />
       <Text sx={{ fontSize: [3] }}>
-        Next we can look at radiative forcing and temperature, which in turn
-        depend on the setting of several physical parameters such as{' '}
+        Next we can look at radiative forcing and temperature. These depend on
+        the setting of several physical parameters, such as{' '}
         <Styled.inlineCode>B</Styled.inlineCode>=
-        <Variable v={B.toFixed(2)} />, which in turn determines the equilibrium
+        <Variable v={B.toFixed(2)} />, which itself determines the equilibrium
         climate sensitivity <Styled.inlineCode>ECS</Styled.inlineCode>=
         <Variable v={m.ecs().toFixed(2)} />. (Note that this entire document is
-        interactive, so changing the above parameters will also continue to
-        update these charts!)
+        interactive, so changing parameters in either section will update all of
+        the charts!)
       </Text>
-      <Grid columns={['500px 1fr']} sx={{ mt: [4] }}>
+      <Grid gap={[5]} columns={['500px 1fr']} sx={{ mt: [4] }}>
         <Box>
           <Divider />
           <Chart
@@ -226,8 +238,97 @@ function Tutorial() {
           </Box>
         </Box>
       </Grid>
-      <Divider />
-      <Text sx={{ fontSize: [3] }}>We can also specify controls...</Text>
+      <Divider sx={{ mb: [4] }} />
+      <Text sx={{ fontSize: [3] }}>
+        We can also specify values for the controls. In this case, we specify
+        simple ramp functions for mitigation and removal, and look at the
+        corresponding consequences on temperature.
+      </Text>
+      <Grid gap={[5]} columns={['500px 1fr']} sx={{ mt: [4] }}>
+        <Box>
+          <Divider />
+          <DoubleChart
+            x={m.t()}
+            y={m.mitigate()}
+            x2={m.t()}
+            y2={m.remove()}
+            scales={{
+              x: [2020, 2200],
+              y: [-0.1, 1],
+              title: 'MITIGATION (% deployment)',
+              color: 'yellow',
+            }}
+            scales2={{
+              x: [2020, 2200],
+              y: [-0.1, 1],
+              title: 'REMOVAL (% deployment)',
+              color: 'green',
+            }}
+          />
+          <Chart
+            x={m.t()}
+            y={m.temperature()}
+            scales={{
+              x: [2020, 2200],
+              y: [0, 5],
+              padding: 7,
+              title: 'TEMPERATURE (ºC)',
+              color: 'blue',
+            }}
+          />
+        </Box>
+        <Box>
+          <Divider />
+          <Box sx={{ my: [3] }}>
+            <Text
+              sx={{
+                fontFamily: 'heading',
+                letterSpacing: 'wide',
+                fontSize: [3],
+              }}
+            >
+              CONTROLS
+            </Text>
+            <Text
+              sx={{
+                fontFamily: 'monospace',
+                letterSpacing: 'monospace',
+                fontSize: [2],
+                mt: [3],
+              }}
+            >
+              Mitigate
+            </Text>
+            <Slider
+              sx={{ width: '200px' }}
+              value={mitigate}
+              onChange={(e) => setMitigate(parseFloat(e.target.value))}
+              min='0.0'
+              max='1.0'
+              step='0.01'
+            ></Slider>
+            <Text
+              sx={{
+                fontFamily: 'monospace',
+                letterSpacing: 'monospace',
+                fontSize: [2],
+                mt: [3],
+              }}
+            >
+              Remove
+            </Text>
+            <Slider
+              sx={{ width: '200px' }}
+              value={remove}
+              onChange={(e) => setRemove(parseFloat(e.target.value))}
+              min='0.0'
+              max='1.0'
+              step='0.01'
+            ></Slider>
+          </Box>
+        </Box>
+      </Grid>
+      <Divider sx={{ mb: [4] }} />
     </Box>
   )
 }

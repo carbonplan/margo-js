@@ -1,3 +1,4 @@
+import { Divider } from 'theme-ui'
 import Layout from './components/layout'
 import Tutorial from './components/tutorial'
 
@@ -5,7 +6,9 @@ export const meta = {}
 
 # margo-js
 
-This notebook demonstrates a pure Javascript implementation of the MARGO climate model.
+<Divider sx={{ mt: [4], mb: [4] }}/>
+
+This notebook demonstrates a work-in-progress pure Javascript implementation of the MARGO climate model.
 
 The MARGO model, developed by Drake, Rivest, Deutch, and Edelman (2020), proposes a feed forward causal model relating emissions, greenhouse gas concentrations, radiative forcing, temperatures, and climate damages, all of which can be controlled by varying amounts of mitigation, carbon removal, geoengineering, and adaptation. A preprint is available on [EarthRXiv](https://eartharxiv.org/5bgyc) and the source code for a Julia implementation is available on [Github](https://github.com/hdrake/ClimateMARGO.jl).
 
@@ -75,5 +78,17 @@ will recompute the baseline and controls using a combination of new and previous
 Here we walk through some example parameter configurations and charts.
 
 <Tutorial />
+
+There's a lot more to do!
+
+At a mimum, we need to
+
+(1) implement the economic components
+
+(2) implement the optimization (we are looking at [this library](https://github.com/tab58/ndarray-optimization))
+
+We're eager to discuss potential use cases for a purely web-based version of the model, and future directions we could take this work.
+
+<Divider sx={{ mt: [4], mb: [6] }}/>
 
 export default ({ children }) => <Layout meta={meta}>{children}</Layout>
