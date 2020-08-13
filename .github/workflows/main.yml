@@ -19,7 +19,6 @@ jobs:
       - name: test module
         run: |
           npm i
-          npm run build
           npm run test
       - name: test demo
         run: |
