@@ -71,10 +71,9 @@ const Chart = ({ x, y, x2, y2, scales, scales2 }) => {
                 padding: 0,
                 nice: false,
               },
-              axis: null
+              axis: null,
             },
           },
-
         },
         {
           data: {
@@ -157,8 +156,8 @@ const Chart = ({ x, y, x2, y2, scales, scales2 }) => {
               },
             },
           },
-        }
-      ]
+        },
+      ],
     }
     setSpec(vegaLite.compile(spec, { config: config }).spec)
     setLoaded(true)

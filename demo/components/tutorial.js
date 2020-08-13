@@ -55,8 +55,12 @@ function Tutorial() {
   }
 
   m.controls = {
-    mitigate: Array(m.n).fill(0).map((v,i) => (i / m.n) * mitigate),
-    remove: Array(m.n).fill(0).map((v,i) => (i / m.n) * remove)
+    mitigate: Array(m.n)
+      .fill(0)
+      .map((v, i) => (i / m.n) * mitigate),
+    remove: Array(m.n)
+      .fill(0)
+      .map((v, i) => (i / m.n) * remove),
   }
 
   return (
@@ -167,14 +171,14 @@ function Tutorial() {
       </Grid>
       <Divider sx={{ mb: [4] }} />
       <Text sx={{ fontSize: [3] }}>
-        Next we can look at radiative forcing and temperature. These
-        depend on the setting of several physical parameters, such as{' '}
+        Next we can look at radiative forcing and temperature. These depend on
+        the setting of several physical parameters, such as{' '}
         <Styled.inlineCode>B</Styled.inlineCode>=
         <Variable v={B.toFixed(2)} />, which itself determines the equilibrium
         climate sensitivity <Styled.inlineCode>ECS</Styled.inlineCode>=
         <Variable v={m.ecs().toFixed(2)} />. (Note that this entire document is
-        interactive, so changing parameters in either section will
-        update all of the charts!)
+        interactive, so changing parameters in either section will update all of
+        the charts!)
       </Text>
       <Grid gap={[5]} columns={['500px 1fr']} sx={{ mt: [4] }}>
         <Box>
@@ -234,12 +238,11 @@ function Tutorial() {
           </Box>
         </Box>
       </Grid>
-      <Divider sx={{ mb: [4] }}/>
+      <Divider sx={{ mb: [4] }} />
       <Text sx={{ fontSize: [3] }}>
-        We can also specify values for the controls.
-        In this case, we specify simple ramp functions for 
-        mitigation and removal, and look at the corresponding consequences
-        on temperature.
+        We can also specify values for the controls. In this case, we specify
+        simple ramp functions for mitigation and removal, and look at the
+        corresponding consequences on temperature.
       </Text>
       <Grid gap={[5]} columns={['500px 1fr']} sx={{ mt: [4] }}>
         <Box>
@@ -325,7 +328,7 @@ function Tutorial() {
           </Box>
         </Box>
       </Grid>
-      <Divider sx={{ mb: [4] }}/>
+      <Divider sx={{ mb: [4] }} />
     </Box>
   )
 }
