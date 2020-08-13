@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { Styled, Box, Text, Grid, Slider, Divider } from 'theme-ui'
-import { Model } from '../..'
+import { Model } from '../lib/margo-js'
 import Chart from './chart'
 import DoubleChart from './double-chart'
 import Variable from './variable'
