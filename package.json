@@ -10,6 +10,7 @@
     "build-demo": "rollup src/index.js --file demo/lib/margo-js.js --format es",
     "dev": "rollup -c -w",
     "dev-demo": "rollup src/index.js --file demo/lib/margo-js.js --format es -w & (cd demo && npm run dev)",
+    "install-demo": "cd demo && npm run i",
     "test": "node test/test.js | tap-spec",
     "pretest": "npm run build",
     "format": "prettier --write 'src/*.js' 'demo/components/*.js' 'demo/pages/*.js'"

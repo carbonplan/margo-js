@@ -75,11 +75,18 @@ npm run test
 
 ## demo
 
-to checkout a demo web app, first follow the instructions above to build the package, then navigate to the `demo` folder and run
+to run the demo web app, install the dependencies using
 
 ```
-npm i
-npm run dev
+npm install-demo
 ```
 
-you can also see the demo live [here]()
+then start the live development server using
+
+```
+npm dev-demo
+```
+
+and navigate to `http://localhost:3000` in your browser.
+
+You can also see the demo live [here]()
