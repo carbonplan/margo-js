@@ -7,8 +7,9 @@
   "browser": "dst/margo-js.umd.js",
   "scripts": {
     "build": "rollup -c",
-    "build-demo": "npm run build && cp dst/margo-js.esm.js demo/lib/margo-js.js",
+    "build-demo": "rollup src/index.js --file demo/lib/margo-js.js --format es",
     "dev": "rollup -c -w",
+    "dev-demo": "rollup src/index.js --file demo/lib/margo-js.js --format es -w & (cd demo && npm run dev)",
     "test": "node test/test.js | tap-spec",
     "pretest": "npm run build",
     "format": "prettier --write 'src/*.js' 'demo/components/*.js' 'demo/pages/*.js'"
