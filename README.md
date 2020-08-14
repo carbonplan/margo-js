@@ -78,13 +78,13 @@ npm run test
 to run the demo web app, install the dependencies using
 
 ```
-npm install-demo
+npm run install-demo
 ```
 
 then start the live development server using
 
 ```
-npm dev-demo
+npm run dev-demo
 ```
 
 and navigate to `http://localhost:3000` in your browser.
