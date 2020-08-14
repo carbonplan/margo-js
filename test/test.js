@@ -36,47 +36,55 @@ var opts = {
   controls: null,
 }
 
-const m = margo.Model(opts)
-
-const emissions = m.emissions()
-const concentration = m.concentration()
-const forcing = m.forcing()
-const temperature = m.temperature()
-const ecs = m.ecs()
-
 test('emissions', (t) => {
+  const m = margo.Model(opts)
+  const emissions = m.emissions()
   t.equal(emissions[0], 7.5)
   t.equal(emissions[5], 12.1875)
   t.end()
 })
 
 test('concentration', (t) => {
+  const m = margo.Model(opts)
+  const concentration = m.concentration()
   t.equal(concentration[0], 478.75)
   t.equal(concentration[5], 607.65625)
   t.end()
 })
 
 test('forcing', (t) => {
+  const m = margo.Model(opts)
+  const forcing = m.forcing()
   t.equal(forcing[0], 0.1988532592444071)
   t.equal(forcing[5], 1.3855943936513244)
   t.end()
 })
 
 test('temperature', (t) => {
+  const m = margo.Model(opts)
+  const temperature = m.temperature()
   t.equal(temperature[0], 1.2083551842122768)
   t.equal(temperature[5], 1.8776281942807453)
   t.end()
 })
 
 test('ecs', (t) => {
-  t.equal(ecs, 3.053097345132744)
+  const m = margo.Model(opts)
+  t.equal(m.ecs(), 3.053097345132744)
+  t.end()
+})
+
+
+test('n', (t) => {
+  const m = margo.Model(opts)
+  t.equal(m.n(), 37)
   t.end()
 })
 
 test('update', (t) => {
-  const m2 = margo.Model(opts)
-  m2.physics = { B : 1.2 }
-  const ecs1 = m2.ecs()
-  t.equal(ecs1, 2.8750000000000004)
+  const m = margo.Model(opts)
+  t.equal(m.ecs(), 3.053097345132744)
+  m.physics = { B : 1.2 }
+  t.equal(m.ecs(), 2.8750000000000004)
   t.end()
 })

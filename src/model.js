@@ -11,7 +11,7 @@ const Model = (opts) => {
 
   const out = {
     t: () => time.t,
-    n: time.n,
+    n: () => time.n,
     mitigate: () => controls.mitigate,
     remove: () => controls.remove,
     geoeng: () => controls.geoeng,
