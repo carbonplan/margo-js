@@ -41,7 +41,7 @@ const Model = (opts) => {
   }
 
   for (const [name, method] of Object.entries(diagnostics)) {
-    out[name] = (opts) => method({time, baseline, physics, controls}, opts)
+    out[name] = (opts) => method({ time, baseline, physics, controls }, opts)
   }
 
   return out

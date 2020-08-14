@@ -74,7 +74,6 @@ test('ecs', (t) => {
   t.end()
 })
 
-
 test('n', (t) => {
   const m = margo.Model(opts)
   t.equal(m.n(), 37)

@@ -17,7 +17,7 @@ const emissions = (model, opts) => {
 const effectiveEmissions = (model, opts) => {
   opts = opts ? opts : {}
   const units = opts.units ? opts.units : 'ppm'
-  const {time, baseline, physics, controls} = model
+  const { time, baseline, physics, controls } = model
   const { r } = physics
   const { q } = baseline
   const e = time.i.map((i) => {
@@ -82,5 +82,5 @@ export default {
   concentration,
   forcing,
   temperature,
-  ecs
+  ecs,
 }
