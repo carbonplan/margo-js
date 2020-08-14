@@ -72,3 +72,11 @@ test('ecs', (t) => {
   t.equal(ecs, 3.053097345132744)
   t.end()
 })
+
+test('update', (t) => {
+  const m2 = margo.Model(opts)
+  m2.physics = { B : 1.2 }
+  const ecs1 = m2.ecs()
+  t.equal(ecs1, 2.8750000000000004)
+  t.end()
+})
