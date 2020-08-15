@@ -2,7 +2,11 @@
 
 ![CI](https://github.com/carbonplan/margo-js/workflows/CI/badge.svg)
 
-margo climate model in pure javascript
+> MARGO climate model in pure javascript
+
+This is a work-in-progress pure Javascript implementation of the MARGO climate model developed by Drake, Rivest, Deutch, and Edelman (2020). MARGO is a feed forward causal model relating emissions, greenhouse gas concentrations, radiative forcing, temperatures, and climate damages, all of which can be controlled by varying amounts of mitigation, carbon removal, geoengineering, and adaptation. A preprint is available on [EarthRXiv](https://eartharxiv.org/5bgyc) and the source code for a Julia implementation is available on [Github](https://github.com/hdrake/ClimateMARGO.jl).
+
+Potential use cases for a pure JS implementation include light-weight interactive articles and visual storytelling without the need for a server or client-server architectures. That said, implementations in Julia or similar languages will likely have performance advantages and be more appealing for research use cases.
 
 ## how to use
 
