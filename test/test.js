@@ -83,7 +83,7 @@ test('n', (t) => {
 test('update', (t) => {
   const m = margo.Model(opts)
   t.equal(m.ecs(), 3.053097345132744)
-  m.physics = { B : 1.2 }
+  m.physics = { B: 1.2 }
   t.equal(m.ecs(), 2.8750000000000004)
   t.end()
 })
