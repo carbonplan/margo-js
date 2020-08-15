@@ -29,8 +29,8 @@ var opts = {
     B: 1.2,
   },
   controls: {
-    remove: (t, i) => i * 0.1
-  }
+    remove: (t, i) => i * 0.1,
+  },
 }
 
 const m = Model(opts)
@@ -42,7 +42,7 @@ Once constructed you can access current model settings with functions
 m.t() // array of time points
 m.n() // number of time points
 m.opts() // full set of parameters
-````
+```
 
 generate diagnostic time series arrays from the model
 
@@ -66,7 +66,7 @@ Some of these methods have options e.g. for specifying units, such as
 
 ```js
 m.emissions({ units: 'CO2e' })
-````
+```
 
 You can update parameters by setting one or more values on the corresponding parameter group
 
