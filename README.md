@@ -10,7 +10,7 @@ Potential use cases for a pure JS implementation include light-weight interactiv
 
 ## how to use
 
-instantiate a model with default parameters using
+Instantiate a model with default parameters using
 
 ```js
 import { Model } from 'margo-js'
@@ -18,7 +18,7 @@ import { Model } from 'margo-js'
 const m = Model()
 ```
 
-you can specify lots of parameters, for example here we set a maximum time and a climate feedback parameter
+You can optionally specify several parameters, for example here we set a maximum time, a climate feedback parameter, and a removal control that grows with time
 
 ```js
 var opts = {
@@ -28,12 +28,23 @@ var opts = {
   physics: {
     B: 1.2,
   },
+  controls: {
+    remove: (t, i) => i * 0.1
+  }
 }
 
 const m = Model(opts)
 ```
 
-once constructed you can generate diagnostic time series from the model
+Once constructed you can access current model settings with functions
+
+```js
+m.t() // time
+m.n() // number of time points
+m.opts() // full set of parameters
+````
+
+generate diagnostic time series from the model
 
 ```js
 m.emissions()
@@ -42,7 +53,22 @@ m.forcing()
 m.temperature()
 ```
 
-you can update parameters by setting on or more values on the corresponding parameter group
+and generate control time series
+
+```js
+m.mitigate()
+m.remove()
+m.geoeng()
+m.adapt()
+```
+
+Some of these methods have options e.g. for specifying units, such as
+
+```js
+m.emissions({ units: 'CO2e' })
+````
+
+You can update parameters by setting on or more values on the corresponding parameter group
 
 ```js
 m.physics = { B: 1.2 }
