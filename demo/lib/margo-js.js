@@ -91,7 +91,7 @@ var diagnostics = {
 
 const Model = (opts) => {
   const init = opts ? opts : {};
-  
+
   var time = Time(init.time);
   var baseline = Baseline(init.baseline, time);
   var controls = Controls(init.controls, time);

@@ -8,10 +8,10 @@
   "scripts": {
     "build": "rollup -c",
     "dev": "rollup -c -w",
-    "build-demo": "(rollup src/index.js --file demo/lib/margo-js.js --format cjs) && cd demo && npm run build",
+    "build-demo": "(rollup src/index.js --file demo/lib/margo-js.js --format cjs) && (cd demo && npm run build)",
     "dev-demo": "(cd demo && npm run dev) & rollup src/index.js --file demo/lib/margo-js.js --format cjs -w",
     "start-demo": "npm run build-demo && (cd demo && npm run start)",
-    "install-demo": "cd demo && npm run i",
+    "install-demo": "cd demo && npm install",
     "test": "node test/test.js | tap-spec",
     "pretest": "npm run build",
     "format": "prettier --write 'src/*.js' 'demo/components/*.js' 'demo/pages/*.js'"

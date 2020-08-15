@@ -22,11 +22,8 @@ jobs:
           npm run test
       - name: test demo
         run: |
+          npm run install-demo
           npm run build-demo
-          cd demo
-          npm i
-          npm run build
-          cd -
   lint:
     runs-on: ubuntu-latest
     steps:
