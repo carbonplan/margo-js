@@ -6,7 +6,7 @@ export const meta = {}
 
 # margo-js
 
-<Divider sx={{ mt: [4], mb: [4] }}/>
+<Divider sx={{ mt: [4], mb: [4] }} />
 
 This notebook demonstrates a work-in-progress pure Javascript implementation of the MARGO climate model.
 
@@ -89,6 +89,6 @@ At a mimum, we need to
 
 We're eager to discuss potential use cases for a purely web-based version of the model, and future directions we could take this work.
 
-<Divider sx={{ mt: [4], mb: [6] }}/>
+<Divider sx={{ mt: [4], mb: [6] }} />
 
 export default ({ children }) => <Layout meta={meta}>{children}</Layout>
