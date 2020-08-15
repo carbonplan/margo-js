@@ -39,12 +39,12 @@ const m = Model(opts)
 Once constructed you can access current model settings with functions
 
 ```js
-m.t() // time
+m.t() // array of time points
 m.n() // number of time points
 m.opts() // full set of parameters
 ````
 
-generate diagnostic time series from the model
+generate diagnostic time series arrays from the model
 
 ```js
 m.emissions()
@@ -68,7 +68,7 @@ Some of these methods have options e.g. for specifying units, such as
 m.emissions({ units: 'CO2e' })
 ````
 
-You can update parameters by setting on or more values on the corresponding parameter group
+You can update parameters by setting one or more values on the corresponding parameter group
 
 ```js
 m.physics = { B: 1.2 }
@@ -85,7 +85,7 @@ const mOpt = optimize(m)
 
 ## development
 
-for developing the library, first clone the repository and install the dependencies using
+For developing the library, first clone the repository and install the dependencies using
 
 ```
 npm i
@@ -105,7 +105,7 @@ npm run test
 
 ## demo
 
-to run the demo web app, which can be useful during development, install the dependencies using
+To run the demo web app, which can be useful during development, install the dependencies using
 
 ```
 npm run install-demo
