@@ -7,9 +7,10 @@
   "browser": "dst/margo-js.umd.js",
   "scripts": {
     "build": "rollup -c",
-    "build-demo": "rollup src/index.js --file demo/lib/margo-js.js --format es",
     "dev": "rollup -c -w",
-    "dev-demo": "rollup src/index.js --file demo/lib/margo-js.js --format es -w & (cd demo && npm run dev)",
+    "build-demo": "(rollup src/index.js --file demo/lib/margo-js.js --format cjs) && cd demo && npm run build",
+    "dev-demo": "(cd demo && npm run dev) & rollup src/index.js --file demo/lib/margo-js.js --format cjs -w",
+    "start-demo": "npm run build-demo && (cd demo && npm run start)",
     "install-demo": "cd demo && npm run i",
     "test": "node test/test.js | tap-spec",
     "pretest": "npm run build",

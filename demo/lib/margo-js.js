@@ -1,3 +1,7 @@
+'use strict';
+
+Object.defineProperty(exports, '__esModule', { value: true });
+
 const ppmToCO2e = (ppm) => ppm * (2.13 * (44 / 12));
 
 const emissions = (model, opts) => {
@@ -17,7 +21,7 @@ const emissions = (model, opts) => {
 const effectiveEmissions = (model, opts) => {
   opts = opts ? opts : {};
   const units = opts.units ? opts.units : 'ppm';
-  const {time, baseline, physics, controls} = model;
+  const { time, baseline, physics, controls } = model;
   const { r } = physics;
   const { q } = baseline;
   const e = time.i.map((i) => {
@@ -82,12 +86,12 @@ var diagnostics = {
   concentration,
   forcing,
   temperature,
-  ecs
+  ecs,
 };
 
 const Model = (opts) => {
   const init = opts ? opts : {};
-
+  
   var time = Time(init.time);
   var baseline = Baseline(init.baseline, time);
   var controls = Controls(init.controls, time);
@@ -96,7 +100,7 @@ const Model = (opts) => {
 
   const out = {
     t: () => time.t,
-    n: time.n,
+    n: () => time.n,
     mitigate: () => controls.mitigate,
     remove: () => controls.remove,
     geoeng: () => controls.geoeng,
@@ -126,7 +130,7 @@ const Model = (opts) => {
   };
 
   for (const [name, method] of Object.entries(diagnostics)) {
-    out[name] = (opts) => method({time, baseline, physics, controls}, opts);
+    out[name] = (opts) => method({ time, baseline, physics, controls }, opts);
   }
 
   return out
@@ -246,4 +250,4 @@ const Controls = (opts, time) => {
   }
 };
 
-export { Model };
+exports.Model = Model;

@@ -55,7 +55,7 @@ const mOpt = optimize(m)
 
 ## development
 
-for development, first clone the repository and install the dependencies using
+for developing the library, first clone the repository and install the dependencies using
 
 ```
 npm i
@@ -75,7 +75,7 @@ npm run test
 
 ## demo
 
-to run the demo web app, install the dependencies using
+to run the demo web app, which can be useful during development, install the dependencies using
 
 ```
 npm run install-demo
@@ -87,6 +87,6 @@ then start the live development server using
 npm run dev-demo
 ```
 
-and navigate to `http://localhost:3000` in your browser.
+and navigate to `http://localhost:3000` in your browser. While in this mode, any changes either to the top-level `margo-js` module or the demo web app should immediately be reflected in the browser.
 
-You can also see the demo live [here]()
+You can also see the demo live [here]().

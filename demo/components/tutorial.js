@@ -55,12 +55,12 @@ function Tutorial() {
   }
 
   m.controls = {
-    mitigate: Array(m.n)
+    mitigate: Array(m.n())
       .fill(0)
-      .map((v, i) => (i / m.n) * mitigate),
-    remove: Array(m.n)
+      .map((v, i) => (i / m.n()) * mitigate),
+    remove: Array(m.n())
       .fill(0)
-      .map((v, i) => (i / m.n) * remove),
+      .map((v, i) => (i / m.n()) * remove),
   }
 
   return (
