@@ -12,7 +12,7 @@ const modelControlled = margo.Model({
   },
 })
 
-test.Test.prototype.almostEqual = function(a, b, msg, extra) {
+test.Test.prototype.almostEqual = function (a, b, msg, extra) {
   this._assert(a.toFixed(12) == b.toFixed(12), {
     message: msg || 'should be equal up to precision of 12',
     operator: 'equal',
