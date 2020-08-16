@@ -1,6 +1,6 @@
 const Economics = (opts) => {
   const defaults = {}
-  opts = {...defaults, ...opts}
+  opts = { ...defaults, ...opts }
 }
 
 export default Economics

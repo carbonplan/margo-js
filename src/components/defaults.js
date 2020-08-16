@@ -2,7 +2,7 @@ const defaults = {
   time: {
     dt: 5,
     tmin: 2020,
-    tmax: 2200
+    tmax: 2200,
   },
   baseline: {
     form: 'ramp',
@@ -29,7 +29,7 @@ const defaults = {
     mitigate: (t) => 0,
     geoeng: (t) => 0,
     adapt: (t) => 0,
-  }
+  },
 }
 
 export default defaults
