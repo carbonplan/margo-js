@@ -118,9 +118,10 @@ We can see the effect changing the controls on the resulting temperature traject
 
 ## Economics
 
-Here we show some economic components of the model as we vary the different controls, including two time series
+Here we show some economic components of the model as we vary the different controls, including three time series
 
 ```js
+m.damage()
 m.cost()
 m.netBenefit()
 ```
