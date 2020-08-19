@@ -94,7 +94,7 @@ m.emissions() // y-axis
 
 ## Controls
 
-MARGO allows a user to specify controls for mitigation, carbon removal, geoengineering, and adaptation. Each is captured as a time series describing the fraction of that control deployed over time. Here, we use a simple parametric family of logistic functions that rise exponentially from `0` and then saturate at `1.0`. The parameter we vary is the point at time at which scale up begins. This may not be a realistic scenario, but it's a nice family for giving us intuition about the model.
+MARGO allows a user to specify controls for mitigation, carbon removal, geoengineering, and adaptation. Each is captured as a time series describing the fraction of that control deployed over time. Here, we use a simple parametric family of logistic functions that rise exponentially from `0` and then saturate at `1.0`. The parameter we vary is the point at time at which scale up begins. This may not be a realistic scenario, but it's a family that can give us some intuition about the model.
 
 In general we can specify controls as arrays (here just setting to a constant):
 
