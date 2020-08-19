@@ -100,14 +100,15 @@ We can specify them as arrays:
 
 ```js
 m.controls = {
-  mitigation: Array(m.n()).fill(0.25)
+  mitigation: Array(m.n()).fill(0.25),
 }
 ```
 
 Or as functions of time
+
 ```js
 m.controls = {
-  mitigtation: (t) => 0.25
+  mitigtation: (t) => 0.25,
 }
 ```
 
@@ -119,11 +120,10 @@ We can see the effect of scaling these controls up and down on the resulting tem
 
 <Economics />
 
-
 There's a lot more to do!
 
 At a mimum, to reproduce the functionality of the Julia implementation, we need to
- implement the optimization. We are looking at [this library](https://github.com/tab58/ndarray-optimization), but are also considering a simple gradient descent approach.
+implement the optimization. We are looking at [this library](https://github.com/tab58/ndarray-optimization), but are also considering a simple gradient descent approach.
 
 We're eager to discuss potential use cases for a purely web-based version of the model, and future directions we could take this work.
 

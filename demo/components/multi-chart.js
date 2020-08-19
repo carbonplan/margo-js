@@ -120,7 +120,7 @@ const MutliChart = ({ x, y, colors, scales }) => {
             color: {
               field: 'color',
               type: 'nominal',
-              scale: null
+              scale: null,
             },
           },
         },
