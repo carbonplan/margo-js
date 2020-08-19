@@ -136,8 +136,9 @@ m.netPresentBenefit()
 
 There's a lot more to do!
 
-At a mimum, to reproduce the functionality of the Julia implementation, we need to
-implement the optimization. We are looking at [this library](https://github.com/tab58/ndarray-optimization), but are also considering a simple gradient descent approach.
+First, we need to double check all of the calculations and expand the [unit tests](https://github.com/carbonplan/margo-js/blob/master/test/test.js) to ensure we're correctly reproducing the behavior of the Julia verision with respect to the core calculations.
+
+Second, we need to implement the optimization of controls to target scenarios. We are looking at [this library](https://github.com/tab58/ndarray-optimization), but are also considering a simple gradient descent approach.
 
 We're eager to discuss potential use cases for a purely web-based version of the model, and future directions we could take this work.
 

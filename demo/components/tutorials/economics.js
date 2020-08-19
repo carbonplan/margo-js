@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { Styled, Box, Text, Grid, Slider, Divider } from 'theme-ui'
 import { Model } from '../../lib/margo-js'
 import Chart from '../chart'
-import MutliChart from '../multi-chart'
+import MultiChart from '../multi-chart'
 import Variable from '../variable'
 
 const m = Model({
@@ -44,7 +44,7 @@ function Controls() {
       <Grid gap={[5]} columns={['500px 1fr']} sx={{ mt: [4] }}>
         <Box>
           <Divider />
-          <MutliChart
+          <MultiChart
             x={m.t()}
             y={{
               mitigate: m.mitigate(),
@@ -66,16 +66,22 @@ function Controls() {
             }}
             height={100}
           />
-          <Chart
+          <MultiChart
             x={m.t()}
-            y={m.cost()}
+            y={{
+              damage: m.damage(),
+              cost: m.cost().map((v) => -v),
+            }}
             scales={{
               x: [2020, 2200],
-              y: [0, 10],
+              y: [-15, 25],
               padding: 10,
-              title: 'COST',
+              title: 'COST / DAMANGE',
             }}
-            color={'blue'}
+            colors={{
+              damage: 'blue',
+              cost: 'red',
+            }}
             height={100}
           />
           <Chart

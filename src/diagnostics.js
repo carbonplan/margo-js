@@ -56,10 +56,14 @@ const ecs = (model) => {
   return (a * Math.log(2)) / B
 }
 
-const temperature = (model) => {
+const temperature = (model, opts) => {
+  const defaults = {
+    adapt: model.time.i.map((i) => 0),
+  }
+  const { adapt } = { ...defaults, ...opts }
   const { time, physics } = model
   const cumsum = (sum) => (value) => (sum += value)
-  const { Cd, x, B, T0, A } = physics
+  const { Cd, x, B, T0 } = physics
   const td = ((Cd / B) * (B + x)) / x
   const { t, dt } = time
   const f = forcing(model)
@@ -68,12 +72,14 @@ const temperature = (model) => {
     .map(cumsum(0))
     .map((v, i) => {
       return (
-        Math.sqrt(1 - A) *
+        Math.sqrt(1 - adapt[i]) *
         (((v * (x / B)) / (x + B)) * Math.exp(-(t[i] - (t[0] - dt)) / td))
       )
     })
-  const fast = time.i.map((i) => (Math.sqrt(1 - A) * f[i]) / (x + B))
-  const temp = time.i.map((i) => Math.sqrt(1 - A) * (T0 + slow[i] + fast[i]))
+  const fast = time.i.map((i) => (Math.sqrt(1 - adapt[i]) * f[i]) / (x + B))
+  const temp = time.i.map(
+    (i) => Math.sqrt(1 - adapt[i]) * (T0 + slow[i] + fast[i])
+  )
   return temp
 }
 
@@ -91,10 +97,10 @@ const discount = (model) => {
 }
 
 const _damage = (model, discounting) => {
-  const { economics, time } = model
+  const { economics, time, controls } = model
   const { beta } = economics
   const E = growth(model)
-  const T = temperature(model)
+  const T = temperature(model, { adapt: controls.adapt })
   const D = discount(model).map((d) => (1 + discounting ? 1 : 0 * (d - 1)))
 
   return time.i.map((i) => (1 - 0) * beta * E[i] * Math.pow(T[i], 2) * D[i])

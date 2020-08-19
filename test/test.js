@@ -70,42 +70,49 @@ test('discount (default)', (t) => {
   t.end()
 })
 
+// TODO test actual values
 test('damage (default)', (t) => {
   const damage = modelDefault.damage()
   t.ok(damage)
   t.end()
 })
 
+// TODO test actual values
 test('damage baseline (default)', (t) => {
   const damageBaseline = modelDefault.damageBaseline()
   t.ok(damageBaseline)
   t.end()
 })
 
+// TODO test actual values
 test('cost (controlled)', (t) => {
   const cost = modelControlled.cost()
   t.ok(cost)
   t.end()
 })
 
+// TODO test actual values
 test('benefit (controlled)', (t) => {
   const benefit = modelControlled.benefit()
   t.ok(benefit)
   t.end()
 })
 
+// TODO test actual values
 test('net benefit (controlled)', (t) => {
   const netBenefit = modelControlled.netBenefit()
   t.ok(netBenefit)
   t.end()
 })
 
+// TODO test actual values
 test('net present beneft (controlled)', (t) => {
   const netPresentBenefit = modelControlled.netPresentBenefit()
   t.ok(netPresentBenefit)
   t.end()
 })
 
+// TODO test actual values
 test('net present cost (controlled)', (t) => {
   const netPresentCost = modelControlled.netPresentCost()
   t.ok(netPresentCost)
