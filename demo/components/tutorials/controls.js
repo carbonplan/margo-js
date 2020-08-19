@@ -16,14 +16,14 @@ const m = Model({
   },
 })
 
-const logistic = (t, r, rd) => {
+const logistic = (t, r, a, rd) => {
   const t0 = Math.log(1 / 0.01 - 1) / r + rd
 
   if (t < rd) {
     return 0.005
   }
   if (t >= rd) {
-    return 1 / (1 + Math.exp(-r * (t - t0)))
+    return a * 1 / (1 + Math.exp(-r * (t - t0)))
   }
 }
 
@@ -34,10 +34,10 @@ function Controls() {
   const [geoeng, setGeoeng] = useState(2200)
 
   m.controls = {
-    mitigate: (t) => logistic(t, 0.1, mitigate),
-    remove: (t) => logistic(t, 0.1, remove),
-    adapt: (t) => logistic(t, 0.1, adapt),
-    geoeng: (t) => logistic(t, 0.1, geoeng),
+    mitigate: (t) => logistic(t, 0.1, 1, mitigate),
+    remove: (t) => logistic(t, 0.1, 0.6, remove),
+    adapt: (t) => logistic(t, 0.1, 0.4, adapt),
+    geoeng: (t) => logistic(t, 0.1, 1, geoeng),
   }
 
   return (
@@ -57,7 +57,7 @@ function Controls() {
               x: [2020, 2200],
               y: [0, 1],
               padding: 0,
-              title: 'MITIGATE (%)',
+              title: 'DEPLOYMENT (%)',
             }}
             colors={{
               mitigate: 'green',

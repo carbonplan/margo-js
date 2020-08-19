@@ -15,14 +15,14 @@ const m = Model({
   },
 })
 
-const logistic = (t, r, rd) => {
+const logistic = (t, r, a, rd) => {
   const t0 = Math.log(1 / 0.01 - 1) / r + rd
 
   if (t < rd) {
     return 0.005
   }
   if (t >= rd) {
-    return 1 / (1 + Math.exp(-r * (t - t0)))
+    return a * 1 / (1 + Math.exp(-r * (t - t0)))
   }
 }
 
@@ -33,10 +33,10 @@ function Controls() {
   const [geoeng, setGeoeng] = useState(2200)
 
   m.controls = {
-    mitigate: (t) => logistic(t, 0.1, mitigate),
-    remove: (t) => logistic(t, 0.1, remove),
-    adapt: (t) => logistic(t, 0.1, adapt),
-    geoeng: (t) => logistic(t, 0.1, geoeng),
+    mitigate: (t) => logistic(t, 0.1, 1, mitigate),
+    remove: (t) => logistic(t, 0.1, 0.6, remove),
+    adapt: (t) => logistic(t, 0.1, 0.4, adapt),
+    geoeng: (t) => logistic(t, 0.1, 1, geoeng),
   }
 
   return (
@@ -153,12 +153,12 @@ function Controls() {
                 mt: [3],
               }}
             >
-              adapt
+              geoeng
             </Text>
             <Slider
               sx={{ width: '200px' }}
-              value={adapt}
-              onChange={(e) => setAdapt(parseFloat(e.target.value))}
+              value={geoeng}
+              onChange={(e) => setGeoeng(parseFloat(e.target.value))}
               min='2020'
               max='2200'
               step='0.01'
@@ -171,12 +171,12 @@ function Controls() {
                 mt: [3],
               }}
             >
-              geoeng
+              adapt
             </Text>
             <Slider
               sx={{ width: '200px' }}
-              value={geoeng}
-              onChange={(e) => setGeoeng(parseFloat(e.target.value))}
+              value={adapt}
+              onChange={(e) => setAdapt(parseFloat(e.target.value))}
               min='2020'
               max='2200'
               step='0.01'
