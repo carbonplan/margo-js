@@ -4,7 +4,7 @@ import { useThemeUI, Box } from 'theme-ui'
 
 var vegaLite = require('vega-lite')
 
-const Chart = ({ x, y, scales }) => {
+const Chart = ({ x, y, color, scales, height }) => {
   const [spec, setSpec] = useState(null)
   const [loaded, setLoaded] = useState(false)
   const context = useThemeUI()
@@ -28,11 +28,11 @@ const Chart = ({ x, y, scales }) => {
       },
       axis: {
         grid: false,
-        labelFontSize: theme.fontSizes[2],
+        labelFontSize: theme.fontSizes[1],
         labelFont: theme.fonts.monospace,
         labelColor: theme.colors.text,
         titleFont: theme.fonts.monospace,
-        titleFontSize: theme.fontSizes[2],
+        titleFontSize: theme.fontSizes[1],
         titleColor: theme.colors.text,
         domain: true,
         tickOffset: 0,
@@ -51,7 +51,7 @@ const Chart = ({ x, y, scales }) => {
       mark: {
         type: 'line',
         clip: true,
-        color: theme.colors[scales.color],
+        color: theme.colors[color],
       },
       encoding: {
         x: {
@@ -90,7 +90,6 @@ const Chart = ({ x, y, scales }) => {
   }, [context])
 
   const width = 350
-  const height = 200
 
   return (
     <Box sx={{ py: [3] }}>
