@@ -23,7 +23,7 @@ const logistic = (t, r, rd) => {
     return 0.005
   }
   if (t >= rd) {
-    return (1 / (1 + Math.exp(-r * (t - t0))))
+    return 1 / (1 + Math.exp(-r * (t - t0)))
   }
 }
 
@@ -37,7 +37,7 @@ function Controls() {
     mitigate: (t) => logistic(t, 0.1, mitigate),
     remove: (t) => logistic(t, 0.1, remove),
     adapt: (t) => logistic(t, 0.1, adapt),
-    geoeng: (t) => logistic(t, 0.1, geoeng)
+    geoeng: (t) => logistic(t, 0.1, geoeng),
   }
 
   return (
@@ -51,7 +51,7 @@ function Controls() {
               mitigate: m.mitigate(),
               remove: m.remove(),
               adapt: m.adapt(),
-              geoeng: m.geoeng()
+              geoeng: m.geoeng(),
             }}
             scales={{
               x: [2020, 2200],
@@ -60,10 +60,10 @@ function Controls() {
               title: 'MITIGATE (%)',
             }}
             colors={{
-              mitigate: 'green', 
+              mitigate: 'green',
               remove: 'yellow',
-              adapt: 'red', 
-              geoeng: 'orange'
+              adapt: 'red',
+              geoeng: 'orange',
             }}
             height={100}
           />

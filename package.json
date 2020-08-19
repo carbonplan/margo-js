@@ -14,7 +14,7 @@
     "install-demo": "cd demo && npm install",
     "test": "node test/test.js | tap-spec",
     "pretest": "npm run build",
-    "format-js": "prettier --write 'src/**/*.js' 'test/*.js' 'demo/lib/*.js' 'demo/components/*.js' 'demo/pages/*.js'",
+    "format-js": "prettier --write 'src/**/*.js' 'test/*.js' 'demo/{components,pages}/**/*.js'",
     "format-md": "prettier --write 'demo/demo.md' 'README.md' --parser mdx",
     "format": "npm run format-js && npm run format-md"
   },

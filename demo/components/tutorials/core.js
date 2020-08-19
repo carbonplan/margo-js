@@ -26,16 +26,17 @@ function Core() {
   return (
     <Box>
       <Text sx={{ fontSize: [3] }}>
-        Here we highlight key parameters that control these relationships, such as{' '}
-        <Styled.inlineCode>r</Styled.inlineCode>=
+        Here we highlight key parameters that control these relationships, such
+        as <Styled.inlineCode>r</Styled.inlineCode>=
         <Variable v={r.toFixed(3)} /> and{' '}
         <Styled.inlineCode>td</Styled.inlineCode>=
-        <Variable v={td.toFixed(0)} /> which parameterize a capped emissions ramp with minimal mitigation,
-        and the feedback parameter
+        <Variable v={td.toFixed(0)} /> which parameterize a capped emissions
+        ramp with minimal mitigation, and the feedback parameter
         <Styled.inlineCode>B</Styled.inlineCode>=
-        <Variable v={B.toFixed(2)} />, which determines the equilibrium
-        climate sensitivity <Styled.inlineCode>ECS</Styled.inlineCode>=
-        <Variable v={m.ecs().toFixed(2)} />. Notice how <Styled.inlineCode>B</Styled.inlineCode>
+        <Variable v={B.toFixed(2)} />, which determines the equilibrium climate
+        sensitivity <Styled.inlineCode>ECS</Styled.inlineCode>=
+        <Variable v={m.ecs().toFixed(2)} />. Notice how{' '}
+        <Styled.inlineCode>B</Styled.inlineCode>
         only affects the temperature and not the other model components.
       </Text>
       <Grid gap={[5]} columns={['500px 1fr']} sx={{ mt: [4] }}>
