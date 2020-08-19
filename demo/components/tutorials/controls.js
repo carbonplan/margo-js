@@ -23,7 +23,7 @@ const logistic = (t, r, a, rd) => {
     return 0.005
   }
   if (t >= rd) {
-    return a * 1 / (1 + Math.exp(-r * (t - t0)))
+    return (a * 1) / (1 + Math.exp(-r * (t - t0)))
   }
 }
 
