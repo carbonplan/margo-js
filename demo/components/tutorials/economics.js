@@ -72,7 +72,7 @@ function Controls() {
             scales={{
               x: [2020, 2200],
               y: [0, 10],
-              padding: 20,
+              padding: 10,
               title: 'COST',
             }}
             color={'blue'}
@@ -84,7 +84,7 @@ function Controls() {
             scales={{
               x: [2020, 2200],
               y: [-50, 50],
-              padding: 20,
+              padding: 3,
               title: 'NET BENEFIT',
             }}
             color={'blue'}

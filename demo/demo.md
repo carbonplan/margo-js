@@ -94,9 +94,9 @@ m.emissions() // y-axis
 
 ## Controls
 
-MARGO allows a user to specify controls for mitigation, carbon removal, geoengineering, . Each is captured as a time series describing the fraction of that control deployed over time.
+MARGO allows a user to specify controls for mitigation, carbon removal, geoengineering, and adaptation. Each is captured as a time series describing the fraction of that control deployed over time. Here, we use a simple parametric family of logistic functions that rise exponentially from `0` and then saturate at `1.0`. The parameter we vary is the point at time at which scale up begins. This may not be a realistic scenario, but it's a nice family for giving us intuition about the model.
 
-We can specify them as arrays:
+In general we can specify controls as arrays (here just setting to a constant):
 
 ```js
 m.controls = {
@@ -112,11 +112,25 @@ m.controls = {
 }
 ```
 
-We can see the effect of scaling these controls up and down on the resulting temperature trajectory.
+We can see the effect changing the controls on the resulting temperature trajectory.
 
 <Controls />
 
 ## Economics
+
+Here we show some economic components of the model as we vary the different controls, including two time series
+
+```js
+m.cost()
+m.netBenefit()
+```
+
+and two single values
+
+```js
+m.netPresentCost()
+m.netPresentBenefit()
+```
 
 <Economics />
 
