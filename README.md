@@ -129,7 +129,7 @@ Some immediate things we are working on include
 - implementing the optimization of controls
 - expanding the test suite to more precisely and reliably match the output of the Julia package
 - improving the syntax to "look more like the math"
-- - prototyping ways to embed
+- prototyping ways to embed the library in other contexts (e.g. a live coding playground)
 
 ## license
 
@@ -137,4 +137,4 @@ All the code in this repository is [MIT](https://choosealicense.com/licenses/mit
 
 ## contributions
 
-Credit for the model goes to the authors of the MARGO paper. The [Julia implementation](https://github.com/hdrake/ClimateMARGO.jl) is developed by @hdrake, @zeptodoctor, and @fonsp. We are coordinating and collaborating with @hdrake and @fonsp on this JS impelmentation.
+Credit for the model goes to the authors of the MARGO paper. The [Julia implementation](https://github.com/hdrake/ClimateMARGO.jl) is developed by [@hdrake](https://github.com/hdrake), [@zeptodoctor](https://github.com/zeptodoctor), and [@fonsp](https://github.com/fonsp). We are coordinating and collaborating with them on this impelmentation.
