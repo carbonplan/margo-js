@@ -46,6 +46,9 @@ const Baseline = (opts, time) => {
     case 'capped':
       q = capped()
       break
+    case 'array':
+      q = opts.q
+      break
   }
 
   return {

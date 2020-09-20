@@ -172,3 +172,15 @@ test('specify controls as array', (t) => {
   t.equal(m.remove()[5], 1)
   t.end()
 })
+
+test('specify baseline as array', (t) => {
+  const m = margo.Model()
+  m.baseline = {
+    form: 'array',
+    q: Array(m.n()).fill(1)
+  }
+  t.equal(m.emissions()[0], 1)
+  t.equal(m.emissions()[1], 1)
+  t.equal(m.emissions()[m.n()-1], 1)
+  t.end()
+})
