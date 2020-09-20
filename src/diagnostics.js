@@ -101,7 +101,7 @@ const _damage = (model, discounting) => {
   const { beta } = economics
   const E = growth(model)
   const T = temperature(model, { adapt: controls.adapt })
-  const D = discount(model).map((d) => (1 + discounting ? 1 : 0 * (d - 1)))
+  const D = discount(model).map((d) => (1 + (discounting ? 1 : 0) * (d - 1)))
 
   return time.i.map((i) => (1 - 0) * beta * E[i] * Math.pow(T[i], 2) * D[i])
 }
