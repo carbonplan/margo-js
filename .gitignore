@@ -3,6 +3,3 @@
 dst
 demo/.next
 demo/node_modules
-
-optimize.js
-lib
