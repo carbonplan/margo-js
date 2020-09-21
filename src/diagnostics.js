@@ -71,11 +71,9 @@ const temperature = (model, opts) => {
     .map((i) => (Math.exp((t[i] - (t[0] - dt)) / td) / td) * f[i] * dt)
     .map(cumsum(0))
     .map((v, i) => {
-      return (
-        (((v * (x / B)) / (x + B)) * Math.exp(-(t[i] - (t[0] - dt)) / td))
-      )
+      return ((v * (x / B)) / (x + B)) * Math.exp(-(t[i] - (t[0] - dt)) / td)
     })
-  const fast = time.i.map((i) => (f[i]) / (x + B))
+  const fast = time.i.map((i) => f[i] / (x + B))
   const temp = time.i.map(
     (i) => Math.sqrt(1 - adapt[i]) * (T0 + slow[i] + fast[i])
   )
@@ -101,7 +99,7 @@ const _damage = (model, discounting) => {
   const { beta } = economics
   const E = growth(model)
   const T = temperature(model, { adapt: adapt })
-  const D = discount(model).map((d) => (1 + (discounting ? 1 : 0) * (d - 1)))
+  const D = discount(model).map((d) => 1 + (discounting ? 1 : 0) * (d - 1))
 
   return time.i.map((i) => beta * E[i] * Math.pow(T[i], 2) * D[i])
 }
@@ -119,10 +117,10 @@ const damageBaseline = (model, opts) => {
   const initControls = model.controls
   const { remove, mitigate, adapt, geoeng } = initControls
 
-  model.controls.remove = remove.map((r, i) => time.future[i] ? r : 0)
-  model.controls.mitigate = mitigate.map((m, i) => time.future[i] ? m : 0)
-  model.controls.adapt = adapt.map((a, i) => time.future[i] ? a : 0)
-  model.controls.geoeng = geoeng.map((g, i) => time.future[i] ? g : 0)
+  model.controls.remove = remove.map((r, i) => (time.future[i] ? r : 0))
+  model.controls.mitigate = mitigate.map((m, i) => (time.future[i] ? m : 0))
+  model.controls.adapt = adapt.map((a, i) => (time.future[i] ? a : 0))
+  model.controls.geoeng = geoeng.map((g, i) => (time.future[i] ? g : 0))
 
   const out = _damage(model, discounting)
 
@@ -130,7 +128,7 @@ const damageBaseline = (model, opts) => {
   model.controls.mitigate = mitigate
   model.controls.adapt = adapt
   model.controls.geoeng = geoeng
-  
+
   return out
 }
 
@@ -144,7 +142,7 @@ const cost = (model, opts) => {
   const { q } = baseline
 
   const E = growth(model)
-  const D = discount(model).map((d) => (1 + (discounting ? 1 : 0) * (d - 1)))
+  const D = discount(model).map((d) => 1 + (discounting ? 1 : 0) * (d - 1))
 
   return model.time.i.map(
     (i) =>
