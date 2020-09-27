@@ -76,12 +76,20 @@ m.physics = { B: 1.2 }
 m.time = { tmax: 2300 }
 ```
 
-and you can optimize controls subject to constraints (NOT YET IMPLEMENTED)
+and you can optimize controls subject to constraints
 
 ```js
 import { optimize } from 'margo-js'
 
-const mOpt = optimize(m)
+const mOpt = optimize(m, {
+  objective: 'netBenefit',
+  max: {
+    mitigate: 1,
+    remove: 1,
+    geoeng: 1,
+    adapt: 0
+  }
+})
 ```
 
 ## development
