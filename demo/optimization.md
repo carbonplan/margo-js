@@ -10,28 +10,13 @@ export const meta = {}
 
 This notebook demonstrates optimization within the work-in-progress pure Javascript implementation of the MARGO climate model. For more on the basics of the model see [here](/).
 
-As usual, to set up the model we instatiate it.
+Here's how to create a model and then optimize the controls.
 
 ```js
-import { Model } from 'margo-js'
+import { Model, optimize } from 'margo-js'
 
 const m = Model()
-```
-
-We can then optimize the controls subject to constraints, for example:
-
-```js
-import { optimize } from 'margo-js'
-
-const mOpt = optmize(m, {
-  objective: 'netBenefit',
-  max: {
-    mitigate: 1
-    remove: 1,
-    geoeng: 0,
-    adapt: 0
-  }
-})
+const mOpt = optmize(m, {objective: 'netBenefit'})
 ```
 
 Below you can see the results of the optimization under several different settings. Try it out!
