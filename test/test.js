@@ -19,9 +19,10 @@ const modelControlled = margo.Model({
   },
 })
 
-test.Test.prototype.almostEqual = function (a, b, msg, extra) {
-  this._assert(a.toFixed(11) == b.toFixed(11), {
-    message: msg || 'should be equal up to precision of 12',
+test.Test.prototype.almostEqual = function (a, b, tol, msg, extra) {
+  tol = tol ? tol : 0.00001
+  this._assert(Math.abs(a - b) < tol, {
+    message: msg || 'should be equal up to tolerance of ' + tol,
     operator: 'equal',
     actual: a,
     expected: b,
@@ -29,10 +30,11 @@ test.Test.prototype.almostEqual = function (a, b, msg, extra) {
   })
 }
 
-test.Test.prototype.arrayAlmostEqual = function (a, b, msg, extra) {
-  const matches = a
-    .map((ai, i) => ai.toFixed(11) == b[i].toFixed(11))
-    .reduce((x, y) => x + y, 0)
+test.Test.prototype.arrayAlmostEqual = function (a, b, tol, msg, extra) {
+  tol = tol ? tol : 0.00001
+  const error = a
+    .map((ai, i) => Math.abs(ai - b[i]))
+    .reduce((x, y) => Math.max(x, y), 0)
   this._assert(a.length == b.length, {
     message: msg || 'arrays should be the same length',
     operator: 'equal',
@@ -40,8 +42,8 @@ test.Test.prototype.arrayAlmostEqual = function (a, b, msg, extra) {
     expected: b.length,
     extra: extra,
   })
-  this._assert(matches == a.length, {
-    message: msg || 'arrays should be equal up to precision of 12',
+  this._assert(error < tol, {
+    message: msg || 'arrays should be equal up to tolerance of ' + tol,
     operator: 'equal',
     actual: a,
     expected: b,
@@ -79,6 +81,20 @@ test('update', (t) => {
   m.time = { tmin: 2030 }
   t.equal(m.t()[0], 2030)
 
+  t.end()
+})
+
+test('copy', (t) => {
+  const m = margo.Model({
+    tmin: 2020,
+  })
+  const m2 = m.copy()
+  m.time = {
+    tmin: 2030,
+  }
+
+  t.equal(m.t()[0], 2030)
+  t.equal(m2.t()[0], 2020)
   t.end()
 })
 
@@ -458,48 +474,151 @@ test('net present cost (discounting) (controlled)', (t) => {
   t.end()
 })
 
-// TODO
-test('optimize (scenario 1)', (t) => {
+test('optimize (M, R)', (t) => {
   // only mitigation and removal
   // max slope = 1
   // delay = 0
-  const mitigate = [0.1, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 0.0, 0.0, 0.0]
+  const modelOptimized = margo.optimize(modelDefault, {
+    max: {
+      mitigate: 1,
+      remove: 1,
+      geoeng: 0,
+      adapt: 0,
+    },
+    delay: {
+      mitigate: 0,
+      remove: 0,
+      geoeng: 0,
+      adapt: 0,
+    },
+  })
+  const mitigate = [0.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 0.0, 0.0, 0.0]
   const remove = [
     0.0,
-    0.23325056852892845,
-    0.25984182298286934,
-    0.283166359353035,
-    0.299734271077061,
-    0.3050648973889498,
-    0.29405543459327804,
-    0.2618315586018339,
-    0.20476995015808586,
-    0.12010630879608018,
+    0.24041545135198777,
+    0.268158357309517,
+    0.2926610110855961,
+    0.31032156240242603,
+    0.316475169575232,
+    0.3057489265067898,
+    0.27292348441137254,
+    0.21400221762942787,
+    0.12584453858990485,
   ]
   const temperature = [
-    1.4862064011145981,
-    1.409294914749376,
-    1.3116686437588891,
-    1.19292348794043,
-    1.0541837991033607,
-    0.8991273969898784,
-    0.7351953048948227,
-    0.5746009587994698,
-    0.43453061045117886,
-    0.3365130068803957,
+    1.526027622362269,
+    1.4494200416464542,
+    1.3514172032366887,
+    1.2314987140527751,
+    1.0906730766086905,
+    0.9325478688088886,
+    0.7646260522200014,
+    0.5994444355608319,
+    0.4549071260601984,
+    0.3537187425751215,
   ]
+  t.arrayAlmostEqual(modelOptimized.mitigate(), mitigate, 0.05)
+  t.arrayAlmostEqual(modelOptimized.remove(), remove, 0.05)
+  t.arrayAlmostEqual(modelOptimized.temperature(), temperature, 0.1)
+  t.end()
+})
+
+test('optimize (M, R, G)', (t) => {
+  // only mitigation and removal and geoeng
+  // max slope = 1
+  // delay = 0
+  const modelOptimized = margo.optimize(modelDefault, {
+    max: {
+      mitigate: 1,
+      remove: 1,
+      geoeng: 1,
+      adapt: 0,
+    },
+    delay: {
+      mitigate: 0,
+      remove: 0,
+      geoeng: 0,
+      adapt: 0,
+    },
+  })
+  const mitigate = [
+    0.0,
+    0.8816408459450812,
+    0.9999999980381912,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    0.0,
+    0.0,
+    0.0,
+  ]
+  const remove = [
+    0.0,
+    0.13506398684466733,
+    0.15398839150479673,
+    0.17279594963331096,
+    0.18983797233432487,
+    0.2025766867852793,
+    0.20728700690245896,
+    0.1986897385473793,
+    0.16940884324873398,
+    0.10882318570592404,
+  ]
+  const geoeng = [
+    0.0,
+    0.2065812459117795,
+    0.18992349548965767,
+    0.17343769698270417,
+    0.15700445690585468,
+    0.1406337791582426,
+    0.1245413958636837,
+    0.1092606322598879,
+    0.09579704015654708,
+    0.0858336861496755,
+  ]
+  const temperature = [
+    1.526027622362269,
+    0.567780609345162,
+    0.5591672073732868,
+    0.5437531888533794,
+    0.5214818666797225,
+    0.492828054045499,
+    0.45917532997304467,
+    0.423369082323477,
+    0.390485002933748,
+    0.36885682823182786,
+  ]
+  t.arrayAlmostEqual(modelOptimized.mitigate(), mitigate, 0.05)
+  t.arrayAlmostEqual(modelOptimized.remove(), remove, 0.05)
+  t.arrayAlmostEqual(modelOptimized.geoeng(), geoeng, 0.05)
+  t.arrayAlmostEqual(modelOptimized.temperature(), temperature, 0.1)
   t.end()
 })
 
 // TODO
-test('optimize (scenario 2)', (t) => {
-  // only mitigation and removal and geoeng
+test('optimize (M, R, G) (default delays)', (t) => {
+  // only mitigation and removal and geoeng with default delays
   // max slope = 1
-  // delay = 0
+  // delay = 10 (R) and 30 (G)
+  const modelOptimized = margo.optimize(modelDefault, {
+    max: {
+      mitigate: 1,
+      remove: 1,
+      geoeng: 1,
+      adapt: 0,
+    },
+    delay: {
+      mitigate: 0,
+      remove: 10,
+      geoeng: 30,
+      adapt: 0,
+    },
+  })
   const mitigate = [
-    0.1,
-    0.8686679076280138,
-    0.9900616821924062,
+    0.0,
+    0.9425817567435302,
+    0.9999999708775817,
     1.0,
     1.0,
     1.0,
@@ -510,39 +629,110 @@ test('optimize (scenario 2)', (t) => {
   ]
   const remove = [
     0.0,
-    0.13307658258315852,
-    0.15167364306412573,
-    0.17011699569911526,
-    0.18679128327926137,
-    0.19919894162496385,
-    0.20368474540527906,
-    0.19508401488675087,
-    0.166199808069727,
-    0.10668150259805251,
+    0.14439990007655928,
+    0.15347845072437977,
+    0.17195258547503928,
+    0.18857434950113455,
+    0.20082005283897064,
+    0.20501657383358698,
+    0.19600626650511033,
+    0.16665092962305703,
+    0.10674311089259057,
   ]
   const geoeng = [
     0.0,
-    0.2022367705395075,
-    0.18658383392279568,
-    0.170258508396621,
-    0.15398883791003007,
-    0.13778749044295244,
-    0.12187075277448782,
-    0.1067678999510518,
-    0.09347175917741171,
-    0.08363862665030122,
+    0.0,
+    0.18995419405279929,
+    0.17282929762610022,
+    0.15583403366938303,
+    0.1389756536730014,
+    0.12246953174757676,
+    0.10684884030374363,
+    0.09311416458815748,
+    0.08293020479593285,
   ]
   const temperature = [
-    1.4862064011145981,
-    0.5557818792968877,
-    0.5503176771811303,
-    0.5345305752102375,
-    0.5120000819378663,
-    0.48320787012732336,
-    0.4495357127230821,
-    0.4138067089199785,
-    0.38103431663391896,
-    0.35942390482779196,
+    1.526027622362269,
+    1.522986250692611,
+    0.5635200252641634,
+    0.5449695810777244,
+    0.5197854629828546,
+    0.48845425941356363,
+    0.45238014053369996,
+    0.4144286279275524,
+    0.37967248224828765,
+    0.35637957372178475,
+  ]
+  t.arrayAlmostEqual(modelOptimized.mitigate(), mitigate, 0.05)
+  t.arrayAlmostEqual(modelOptimized.remove(), remove, 0.05)
+  t.arrayAlmostEqual(modelOptimized.geoeng(), geoeng, 0.05)
+  t.arrayAlmostEqual(modelOptimized.temperature(), temperature, 0.1)
+  t.end()
+})
+
+test('optimize (M, R, G, A)', (t) => {
+  // all controls
+  // max slope = 1 (except adaptation is flat)
+  // delay = 0
+  const mitigate = [
+    0.0,
+    0.8746946924020655,
+    0.9975534930479882,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    0.0,
+    0.0,
+    0.0,
+  ]
+  const remove = [
+    0.0,
+    0.13399986272666684,
+    0.15282135982740813,
+    0.17154761971967786,
+    0.1885510645130481,
+    0.2013154309906792,
+    0.20613567238772793,
+    0.19774202725664902,
+    0.16874478517872238,
+    0.10848218741210544,
+  ]
+  const geoeng = [
+    0.0,
+    0.2043979409364183,
+    0.18818282423514565,
+    0.1719572368161842,
+    0.15580337461700394,
+    0.13972761721690272,
+    0.12393620012792728,
+    0.10894445889940094,
+    0.09572850680642563,
+    0.08592706100634284,
+  ]
+  const adapt = [
+    0.0,
+    0.03895453662227197,
+    0.03895453662227197,
+    0.03895453662227197,
+    0.03895453662227197,
+    0.03895453662227197,
+    0.03895453662227197,
+    0.03895453662227197,
+    0.03895453662227197,
+    0.03895453662227197,
+  ]
+  const temperature = [
+    1.526027622362269,
+    0.5713433799105192,
+    0.5639824338386437,
+    0.5489767545185219,
+    0.5271513204472548,
+    0.49897289957514235,
+    0.46580736748632634,
+    0.43047047311146486,
+    0.39799632294463416,
+    0.37666741727927994,
   ]
   t.end()
 })
