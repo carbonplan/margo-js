@@ -475,13 +475,22 @@ test('net present cost (discounting) (controlled)', (t) => {
 })
 
 test('optimize (M, R)', (t) => {
+  // only mitigation and removal
+  // max slope = 1
+  // delay = 0
   const modelOptimized = margo.optimize(modelDefault, {
-    maxDeployment: {
+    max: {
       mitigate: 1,
       remove: 1,
       geoeng: 0,
-      adapt: 0
-    }
+      adapt: 0,
+    },
+    delay: {
+      mitigate: 0,
+      remove: 0,
+      geoeng: 0,
+      adapt: 0,
+    },
   })
   const mitigate = [0.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 0.0, 0.0, 0.0]
   const remove = [
@@ -508,24 +517,29 @@ test('optimize (M, R)', (t) => {
     0.4549071260601984,
     0.3537187425751215,
   ]
-  t.arrayAlmostEqual(modelOptimized.mitigate(), mitigate, 0.03)
-  t.arrayAlmostEqual(modelOptimized.remove(), remove, 0.03)
-  t.arrayAlmostEqual(modelOptimized.temperature(), temperature, 0.03)
+  t.arrayAlmostEqual(modelOptimized.mitigate(), mitigate, 0.05)
+  t.arrayAlmostEqual(modelOptimized.remove(), remove, 0.05)
+  t.arrayAlmostEqual(modelOptimized.temperature(), temperature, 0.1)
   t.end()
 })
 
-// TODO
 test('optimize (M, R, G)', (t) => {
   // only mitigation and removal and geoeng
   // max slope = 1
   // delay = 0
   const modelOptimized = margo.optimize(modelDefault, {
-    maxDeployment: {
+    max: {
       mitigate: 1,
       remove: 1,
       geoeng: 1,
-      adapt: 0
-    }
+      adapt: 0,
+    },
+    delay: {
+      mitigate: 0,
+      remove: 0,
+      geoeng: 0,
+      adapt: 0,
+    },
   })
   const mitigate = [
     0.0,
@@ -575,17 +589,32 @@ test('optimize (M, R, G)', (t) => {
     0.390485002933748,
     0.36885682823182786,
   ]
-  t.arrayAlmostEqual(modelOptimized.mitigate(), mitigate, 0.03)
-  t.arrayAlmostEqual(modelOptimized.remove(), remove, 0.1)
-  t.arrayAlmostEqual(modelOptimized.geoeng(), remove, 0.1)
+  t.arrayAlmostEqual(modelOptimized.mitigate(), mitigate, 0.05)
+  t.arrayAlmostEqual(modelOptimized.remove(), remove, 0.05)
+  t.arrayAlmostEqual(modelOptimized.geoeng(), geoeng, 0.05)
   t.arrayAlmostEqual(modelOptimized.temperature(), temperature, 0.1)
   t.end()
 })
 
+// TODO
 test('optimize (M, R, G) (default delays)', (t) => {
   // only mitigation and removal and geoeng with default delays
   // max slope = 1
   // delay = 10 (R) and 30 (G)
+  const modelOptimized = margo.optimize(modelDefault, {
+    max: {
+      mitigate: 1,
+      remove: 1,
+      geoeng: 1,
+      adapt: 0,
+    },
+    delay: {
+      mitigate: 0,
+      remove: 10,
+      geoeng: 30,
+      adapt: 0,
+    },
+  })
   const mitigate = [
     0.0,
     0.9425817567435302,
@@ -634,6 +663,10 @@ test('optimize (M, R, G) (default delays)', (t) => {
     0.37967248224828765,
     0.35637957372178475,
   ]
+  t.arrayAlmostEqual(modelOptimized.mitigate(), mitigate, 0.05)
+  t.arrayAlmostEqual(modelOptimized.remove(), remove, 0.05)
+  t.arrayAlmostEqual(modelOptimized.geoeng(), geoeng, 0.05)
+  t.arrayAlmostEqual(modelOptimized.temperature(), temperature, 0.1)
   t.end()
 })
 

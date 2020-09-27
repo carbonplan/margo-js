@@ -74,6 +74,7 @@ const MutliChart = ({ x, y, colors, scales }) => {
                 orient: 'left',
                 padding: 0,
                 offset: 5,
+                values: [0, 0.5, 1],
               },
             },
           },
@@ -86,6 +87,8 @@ const MutliChart = ({ x, y, colors, scales }) => {
             type: 'line',
             clip: true,
             color: theme.colors[scales.color],
+            interpolate: 'monotone',
+            strokeWidth: 3,
           },
           encoding: {
             x: {
@@ -115,6 +118,7 @@ const MutliChart = ({ x, y, colors, scales }) => {
                 orient: 'left',
                 padding: 0,
                 offset: 5,
+                values: [0, 0.5, 1],
               },
             },
             color: {

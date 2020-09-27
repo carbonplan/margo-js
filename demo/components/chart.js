@@ -52,6 +52,8 @@ const Chart = ({ x, y, color, scales, height }) => {
         type: 'line',
         clip: true,
         color: theme.colors[color],
+        interpolate: 'monotone',
+        strokeWidth: 3,
       },
       encoding: {
         x: {

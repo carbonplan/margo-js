@@ -1,5 +1,5 @@
-import ndarray from 'ndarray'
-import ndopt from 'ndarray-optimization'
+const ndarray = require('ndarray')
+const ndopt = require('./ndarray-optimization')
 
 const optimize = (model, opts) => {
   const mOpt = model.copy()
@@ -7,15 +7,15 @@ const optimize = (model, opts) => {
   const defaults = {
     discounting: true,
     tolerance: 1e-5,
-    maxIterations: 500,
+    niter: 500,
     objective: 'netBenefit',
-    maxDeployment: {
+    max: {
       mitigate: 1,
       remove: 1,
       geoeng: 1,
       adapt: 0,
     },
-    delayDeployment: {
+    delay: {
       mitigate: 0,
       remove: 10,
       geoeng: 30,
@@ -23,31 +23,41 @@ const optimize = (model, opts) => {
     },
   }
 
-  const {
-    tolerance,
-    maxIterations,
-    objective,
-    maxDeployment,
-    delayDeployment,
-    discounting
-  } = { ...defaults, ...opts }
+  const { tolerance, niter, objective, max, delay, discounting } = {
+    ...defaults,
+    ...opts,
+  }
 
   const index = mOpt.t().map((_, i) => i)
+  const t = mOpt.t()
   const n = mOpt.n()
 
-  const { mitigate, remove, geoeng, adapt } = maxDeployment
+  const { mitigate, remove, geoeng, adapt } = max
 
-  const M = maxDeployment.mitigate > 0
-  const R = maxDeployment.remove > 0
-  const G = maxDeployment.geoeng > 0
+  const M = max.mitigate > 0
+  const R = max.remove > 0
+  const G = max.geoeng > 0
 
-  const ub = (M ? Array(n).fill(maxDeployment.mitigate) : [])
-    .concat(R ? Array(n).fill(maxDeployment.remove) : [])
-    .concat(G ? Array(n).fill(maxDeployment.geoeng) : [])
+  const _ub = (n, m, td) => {
+    return Array(n)
+      .fill(0)
+      .map((_, i) => {
+        if (t[i] - t[0] >= td) return m
+        else return 0
+      })
+  }
+
+  const ub = (M ? _ub(n, max.mitigate, delay.mitigate) : [])
+    .concat(R ? _ub(n, max.remove, delay.remove) : [])
+    .concat(G ? _ub(n, max.geoeng, delay.geoeng) : [])
 
   const lb = ub.map((_) => 0)
 
-  const x0 = ndarray(lb, [lb.length, 1])
+  const init = (M ? Array(n).fill(0) : [])
+    .concat(R ? Array(n).fill(0.4) : [])
+    .concat(G ? Array(n).fill(0.4) : [])
+
+  const x0 = ndarray(init, [init.length, 1])
 
   let F = (x) => {
     x.data = x.data.map((x, i) => Math.max(x, lb[i]))
@@ -118,13 +128,18 @@ const optimize = (model, opts) => {
     },
     solution: {
       tolerance: tolerance,
-      maxIterations: maxIterations,
+      maxIterations: niter,
     },
   }
 
-  const results = ndopt.unconstrained.quasiNewton(options)
-
-  return mOpt
+  let results
+  try {
+    results = ndopt.unconstrained.quasiNewton(options)
+    return mOpt
+  } catch (err) {
+    console.log('error during optimization')
+    return null
+  }
 }
 
 export { optimize }
