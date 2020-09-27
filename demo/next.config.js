@@ -9,4 +9,8 @@ const withMDX = require('@next/mdx')({
 
 module.exports = withMDX({
   pageExtensions: ['jsx', 'js', 'md', 'mdx'],
+  webpack: (config, { isServer }) => {
+    config.node = { fs: 'empty' }
+    return config
+  }
 })

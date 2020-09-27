@@ -75,12 +75,9 @@ const temperature = (model, opts) => {
     .map((i) => (Math.exp((t[i] - (t[0] - dt)) / td) / td) * f[i] * dt)
     .map(cumsum(0))
     .map((v, i) => {
-      return (
-        Math.sqrt(1 - adapt[i]) *
-        (((v * (x / B)) / (x + B)) * Math.exp(-(t[i] - (t[0] - dt)) / td))
-      )
+      return ((v * (x / B)) / (x + B)) * Math.exp(-(t[i] - (t[0] - dt)) / td)
     })
-  const fast = time.i.map((i) => (Math.sqrt(1 - adapt[i]) * f[i]) / (x + B))
+  const fast = time.i.map((i) => f[i] / (x + B))
   const temp = time.i.map(
     (i) => Math.sqrt(1 - adapt[i]) * (T0 + slow[i] + fast[i])
   )
@@ -102,12 +99,13 @@ const discount = (model) => {
 
 const _damage = (model, discounting) => {
   const { economics, time, controls } = model
+  const { adapt } = controls
   const { beta } = economics
   const E = growth(model)
-  const T = temperature(model, { adapt: controls.adapt })
-  const D = discount(model).map((d) => (1 + discounting ? 1 : 0 * (d - 1)))
+  const T = temperature(model, { adapt: adapt })
+  const D = discount(model).map((d) => 1 + (discounting ? 1 : 0) * (d - 1))
 
-  return time.i.map((i) => (1 - 0) * beta * E[i] * Math.pow(T[i], 2) * D[i])
+  return time.i.map((i) => beta * E[i] * Math.pow(T[i], 2) * D[i])
 }
 
 const damage = (model, opts) => {
@@ -119,17 +117,22 @@ const damage = (model, opts) => {
 const damageBaseline = (model, opts) => {
   const defaults = { discounting: false }
   const { discounting } = { ...defaults, ...opts }
+  const { time } = model
   const initControls = model.controls
+  const { remove, mitigate, adapt, geoeng } = initControls
 
-  model.controls = {
-    remove: model.controls.remove.map((i) => 0),
-    mitigate: model.controls.mitigate.map((i) => 0),
-    adapt: model.controls.adapt.map((i) => 0),
-    geoeng: model.controls.geoeng.map((i) => 0),
-  }
+  model.controls.remove = remove.map((r, i) => (time.future[i] ? r : 0))
+  model.controls.mitigate = mitigate.map((m, i) => (time.future[i] ? m : 0))
+  model.controls.adapt = adapt.map((a, i) => (time.future[i] ? a : 0))
+  model.controls.geoeng = geoeng.map((g, i) => (time.future[i] ? g : 0))
 
   const out = _damage(model, discounting)
-  model.controls = initControls
+
+  model.controls.remove = remove
+  model.controls.mitigate = mitigate
+  model.controls.adapt = adapt
+  model.controls.geoeng = geoeng
+
   return out
 }
 
@@ -143,7 +146,7 @@ const cost = (model, opts) => {
   const { q } = baseline
 
   const E = growth(model)
-  const D = discount(model).map((d) => (1 + discounting ? 1 : 0 * (d - 1)))
+  const D = discount(model).map((d) => 1 + (discounting ? 1 : 0) * (d - 1))
 
   return model.time.i.map(
     (i) =>
@@ -212,7 +215,7 @@ var diagnostics = {
 const Time = (opts) => {
   const { dt, tmin, tmax, tnow } = opts
 
-  const n = (tmax - tmin) / dt + 1
+  const n = Math.floor((tmax - tmin) / dt + 1)
   const t = Array.from(Array(n), (_, i) => tmin + i * dt)
   const i = Array.from(Array(n), (_, i) => i)
   const future = t.map((t) => t <= tnow)
@@ -310,6 +313,9 @@ const Baseline = (opts, time) => {
       break
     case 'capped':
       q = capped()
+      break
+    case 'array':
+      q = opts.q
       break
   }
 

@@ -55,6 +55,15 @@ const Model = (opts) => {
       baseline = Baseline(init.baseline, time)
       controls = Controls(init.controls, time)
     },
+    copy: () => {
+      return Model({
+        time: time,
+        baseline: baseline,
+        controls: controls,
+        economics: economics,
+        physics: physics,
+      })
+    },
   }
 
   for (const [name, method] of Object.entries(diagnostics)) {
