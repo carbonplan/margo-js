@@ -1,3 +1,3 @@
-import Optimization from '../Optimization.md'
+import Optimization from '../optimization.md'
 
 export default Optimization
