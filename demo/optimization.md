@@ -19,7 +19,7 @@ const m = Model()
 const mOpt = optmize(m, {objective: 'netBenefit'})
 ```
 
-Below you can see the results of the optimization under several different settings. Try it out!
+Below you can see the results of the optimization under several different settings. In this demo, you are setting the maximum allowable value for each of three different controls, each of which are deployed over time. The optimization tries to find settings for the controls that maximize `netBenefit` which is defined as the damage averted through deploying those controls minus their cost. Try it out!
 
 <Optimization/>
 
