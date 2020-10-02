@@ -12,5 +12,5 @@ module.exports = withMDX({
   webpack: (config, { isServer }) => {
     config.node = { fs: 'empty' }
     return config
-  }
+  },
 })

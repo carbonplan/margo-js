@@ -87,8 +87,8 @@ const mOpt = optimize(m, {
     mitigate: 1,
     remove: 1,
     geoeng: 1,
-    adapt: 0
-  }
+    adapt: 0,
+  },
 })
 ```
 
