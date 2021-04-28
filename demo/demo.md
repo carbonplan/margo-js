@@ -137,7 +137,7 @@ m.netPresentBenefit()
 
 There's a lot more to do!
 
-First, we need to double check all of the calculations and expand the [unit tests](https://github.com/carbonplan/margo-js/blob/master/test/test.js) to ensure we're correctly reproducing the behavior of the Julia verision with respect to the core calculations.
+First, we need to double check all of the calculations and expand the [unit tests](https://github.com/carbonplan/margo-js/blob/master/test/test.js) to ensure we're correctly reproducing the behavior of the Julia version with respect to the core calculations.
 
 Second, we need to implement the optimization of controls to target scenarios. We are looking at [this library](https://github.com/tab58/ndarray-optimization), but are also considering a simple gradient descent approach.
 
