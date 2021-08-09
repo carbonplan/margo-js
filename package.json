@@ -41,7 +41,7 @@
     "prettier": "^2.3.2",
     "rollup": "^2.56.1",
     "tap-spec": "^5.0.0",
-    "tape": "^5.3.0"
+    "tape": "^5.3.1"
   },
   "dependencies": {
     "ndarray": "^1.0.19",
