@@ -39,7 +39,7 @@
     "@rollup/plugin-commonjs": "^20.0.0",
     "@rollup/plugin-node-resolve": "^13.0.4",
     "prettier": "^2.4.1",
-    "rollup": "^2.56.1",
+    "rollup": "^2.56.3",
     "tap-spec": "^5.0.0",
     "tape": "^5.3.1"
   },
