@@ -37,7 +37,7 @@
   "homepage": "https://github.com/carbonplan/margo-js#readme",
   "devDependencies": {
     "@rollup/plugin-commonjs": "^20.0.0",
-    "@rollup/plugin-node-resolve": "^13.0.4",
+    "@rollup/plugin-node-resolve": "^13.0.6",
     "prettier": "^2.4.1",
     "rollup": "^2.56.1",
     "tap-spec": "^5.0.0",
