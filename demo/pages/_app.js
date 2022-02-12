@@ -23,9 +23,10 @@ const theme = {
       '.comment': {
         fontStyle: 'italic',
       },
-      '.property, .tag, .boolean, .number, .constant, .symbol, .deleted, .function, .class-name, .regex, .important, .variable': {
-        color: 'blue',
-      },
+      '.property, .tag, .boolean, .number, .constant, .symbol, .deleted, .function, .class-name, .regex, .important, .variable':
+        {
+          color: 'blue',
+        },
       '.atrule, .attr-value, .keyword': {
         color: 'primary',
       },
