@@ -75,7 +75,7 @@ const temperature = (model, opts) => {
     })
   const fast = time.i.map((i) => f[i] / (x + B))
   const temp = time.i.map(
-    (i) => Math.sqrt(1 - adapt[i]) * (T0 + slow[i] + fast[i])
+    (i) => Math.sqrt(1 - adapt[i]) * (T0 + slow[i] + fast[i]),
   )
   return temp
 }
@@ -150,7 +150,7 @@ const cost = (model, opts) => {
         E[i] * cost.geoeng * Math.pow(geoeng[i], p) +
         cost.remove * Math.pow(remove[i], p) +
         cost.adapt * Math.pow(adapt[i], p)) *
-      D[i]
+      D[i],
   )
 }
 

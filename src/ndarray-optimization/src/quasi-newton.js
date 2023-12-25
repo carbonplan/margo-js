@@ -29,7 +29,7 @@ module.exports = function quasiNewton(options) {
       maxIterations = options.solution.maxIterations
     } else {
       console.warn(
-        'Maximum iterations capped at default of ' + maxIterations + '.'
+        'Maximum iterations capped at default of ' + maxIterations + '.',
       )
     }
     if (options.solution.tolerance && !isNaN(options.solution.tolerance)) {
