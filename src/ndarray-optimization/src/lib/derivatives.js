@@ -49,7 +49,7 @@ module.exports.backwardDifference = function backwardDifference(
   x0,
   dx,
   f,
-  grad
+  grad,
 ) {
   var fx0 = f(x0)
   var fxh = 0

@@ -79,7 +79,7 @@ const temperature = (model, opts) => {
     })
   const fast = time.i.map((i) => f[i] / (x + B))
   const temp = time.i.map(
-    (i) => Math.sqrt(1 - adapt[i]) * (T0 + slow[i] + fast[i])
+    (i) => Math.sqrt(1 - adapt[i]) * (T0 + slow[i] + fast[i]),
   )
   return temp
 }
@@ -154,7 +154,7 @@ const cost = (model, opts) => {
         E[i] * cost.geoeng * Math.pow(geoeng[i], p) +
         cost.remove * Math.pow(remove[i], p) +
         cost.adapt * Math.pow(adapt[i], p)) *
-      D[i]
+      D[i],
   )
 }
 
@@ -643,7 +643,7 @@ return function construct_' +
     'this.offset=d|0}',
     'var proto=' + className + '.prototype',
     "proto.dtype='" + dtype + "'",
-    'proto.dimension=' + dimension
+    'proto.dimension=' + dimension,
   )
 
   //view.size:
@@ -657,7 +657,7 @@ return ' +
           return 'this.shape[' + i + ']'
         })
         .join('*'),
-    '}})'
+    '}})',
   )
 
   //view.order:
@@ -669,7 +669,7 @@ return ' +
       code.push('function ' + className + '_order(){')
       if (dimension === 2) {
         code.push(
-          'return (Math.abs(this.stride[0])>Math.abs(this.stride[1]))?[1,0]:[0,1]}})'
+          'return (Math.abs(this.stride[0])>Math.abs(this.stride[1]))?[1,0]:[0,1]}})',
         )
       } else if (dimension === 3) {
         code.push(
@@ -688,7 +688,7 @@ return [2,0,1];\
 return [0,1,2];\
 }else{\
 return [0,2,1];\
-}}})'
+}}})',
         )
       }
     } else {
@@ -698,7 +698,7 @@ return [0,2,1];\
 
   //view.set(i0, ..., v):
   code.push(
-    'proto.set=function ' + className + '_set(' + args.join(',') + ',v){'
+    'proto.set=function ' + className + '_set(' + args.join(',') + ',v){',
   )
   if (useGetters) {
     code.push('return this.data.set(' + index_str + ',v)}')
@@ -718,7 +718,7 @@ return [0,2,1];\
   code.push(
     'proto.index=function ' + className + '_index(',
     args.join(),
-    '){return ' + index_str + '}'
+    '){return ' + index_str + '}',
   )
 
   //view.hi():
@@ -751,7 +751,7 @@ return [0,2,1];\
           return 'this.stride[' + i + ']'
         })
         .join(',') +
-      ',this.offset)}'
+      ',this.offset)}',
   )
 
   //view.lo():
@@ -769,7 +769,7 @@ return [0,2,1];\
       '){var b=this.offset,d=0,' +
       a_vars.join(',') +
       ',' +
-      c_vars.join(',')
+      c_vars.join(','),
   )
   for (var i = 0; i < dimension; ++i) {
     code.push(
@@ -786,7 +786,7 @@ b+=c' +
         '*d;\
 a' +
         i +
-        '-=d}'
+        '-=d}',
     )
   }
   code.push(
@@ -804,7 +804,7 @@ a' +
           return 'c' + i
         })
         .join(',') +
-      ',b)}'
+      ',b)}',
   )
 
   //view.step():
@@ -825,7 +825,7 @@ a' +
           return 'b' + i + '=this.stride[' + i + ']'
         })
         .join(',') +
-      ',c=this.offset,d=0,ceil=Math.ceil'
+      ',c=this.offset,d=0,ceil=Math.ceil',
   )
   for (var i = 0; i < dimension; ++i) {
     code.push(
@@ -856,7 +856,7 @@ a' +
 b' +
         i +
         '*=d\
-}'
+}',
     )
   }
   code.push(
@@ -874,7 +874,7 @@ b' +
           return 'b' + i
         })
         .join(',') +
-      ',c)}'
+      ',c)}',
   )
 
   //view.transpose():
@@ -901,7 +901,7 @@ b' +
       tShape.join(',') +
       ',' +
       tStride.join(',') +
-      ',this.offset)}'
+      ',this.offset)}',
   )
 
   //view.pick():
@@ -910,7 +910,7 @@ b' +
       className +
       '_pick(' +
       args +
-      '){var a=[],b=[],c=this.offset'
+      '){var a=[],b=[],c=this.offset',
   )
   for (var i = 0; i < dimension; ++i) {
     code.push(
@@ -926,7 +926,7 @@ b' +
         i +
         ']);b.push(this.stride[' +
         i +
-        '])}'
+        '])}',
     )
   }
   code.push('var ctor=CTOR_LIST[a.length+1];return ctor(this.data,a,b,c)}')
@@ -949,7 +949,7 @@ b' +
           return 'stride[' + i + ']'
         })
         .join(',') +
-      ',offset)}'
+      ',offset)}',
   )
 
   //Compile procedure
@@ -1752,7 +1752,7 @@ var quasiNewton = function quasiNewton(options) {
       maxIterations = options.solution.maxIterations
     } else {
       console.warn(
-        'Maximum iterations capped at default of ' + maxIterations + '.'
+        'Maximum iterations capped at default of ' + maxIterations + '.',
       )
     }
     if (options.solution.tolerance && !isNaN(options.solution.tolerance)) {
