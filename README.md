@@ -1,6 +1,6 @@
 # margo-js
 
-![CI](https://github.com/carbonplan/margo-js/workflows/CI/badge.svg)
+[![CI](https://github.com/carbonplan/margo-js/actions/workflows/main.yml/badge.svg)](https://github.com/carbonplan/margo-js/actions/workflows/main.yml)
 
 > MARGO climate model in pure javascript
 
@@ -141,8 +141,8 @@ Some immediate things we are working on include
 
 ## license
 
-All the code in this repository is [MIT](https://choosealicense.com/licenses/mit/) licensed.
+All the code in this repository is [MIT](https://choosealicense.com/licenses/mit/)-licensed.
 
 ## contributions
 
-Credit for the model goes to the authors of the MARGO paper. The [Julia implementation](https://github.com/hdrake/ClimateMARGO.jl) is developed by [@hdrake](https://github.com/hdrake), [@zeptodoctor](https://github.com/zeptodoctor), and [@fonsp](https://github.com/fonsp). We are coordinating and collaborating with them on this impelmentation.
+Credit for the model goes to the authors of the MARGO paper. The [Julia implementation](https://github.com/hdrake/ClimateMARGO.jl) is developed by [@hdrake](https://github.com/hdrake), [@zeptodoctor](https://github.com/zeptodoctor), and [@fonsp](https://github.com/fonsp). We are coordinating and collaborating with them on this implementation.
